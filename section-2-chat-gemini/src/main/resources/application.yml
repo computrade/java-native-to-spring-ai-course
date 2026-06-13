@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: section-2-chat-gemini
   ai:
     google:
       genai:

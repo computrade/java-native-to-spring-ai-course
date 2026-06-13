@@ -1,3 +1,7 @@
 rootProject.name = 'java-native-to-spring-ai-course'
 
-include 'section-2-chat-interaction'
+include 'section-2-chat-gemini'
+include 'section-2-chat-openai'
+include 'section-2-chat-ollama'
+include 'section-2-chat-cluade'
+include 'section-2-chat-multi'

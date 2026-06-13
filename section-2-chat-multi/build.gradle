@@ -1,0 +1,5 @@
+description = 'section-2-chat-multi'
+
+dependencies {
+    implementation 'org.springframework.ai:spring-ai-starter-model-google-genai'    // Gemini
+}

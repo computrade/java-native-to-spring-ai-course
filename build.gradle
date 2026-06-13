@@ -31,17 +31,8 @@ subprojects {
     dependencies {
         implementation platform("org.springframework.ai:spring-ai-bom:${springAiVersion}")
         implementation 'org.springframework.boot:spring-boot-starter-webmvc'
-
-        // 🤖 The Four AI Providers
-        implementation 'org.springframework.ai:spring-ai-starter-model-openai'
-        implementation 'org.springframework.ai:spring-ai-starter-model-google-genai'    // Gemini
-        implementation 'org.springframework.ai:spring-ai-starter-model-anthropic'       // Claude
-        implementation 'org.springframework.ai:spring-ai-starter-model-ollama'          // Local Llama/Mistral
-
         compileOnly 'org.projectlombok:lombok'
         developmentOnly 'org.springframework.boot:spring-boot-devtools'
-        developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-        developmentOnly 'org.springframework.ai:spring-ai-spring-boot-docker-compose'
         annotationProcessor 'org.projectlombok:lombok'
         testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
         testCompileOnly 'org.projectlombok:lombok'

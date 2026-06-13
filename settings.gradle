@@ -1,0 +1,3 @@
+rootProject.name = 'java-native-to-spring-ai-course'
+
+include 'section-2-chat-interaction'

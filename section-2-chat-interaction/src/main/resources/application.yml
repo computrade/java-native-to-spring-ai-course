@@ -1,12 +1,12 @@
 spring:
   application:
     name: section-2-chat-interaction
+  profiles:
+    active: gemini
   docker:
     compose:
       enabled: false
   ai:
     openai:
       api-key: ${OPENAI_API_KEY:REPLACE_WITH_YOUR_KEY}
-      chat:
-        options:
-          model: gpt-4o
+

@@ -1,5 +1,6 @@
 # IntelliJ IDEA configuration
 .idea/
+.junie/
 *.iml
 out/
 gen/

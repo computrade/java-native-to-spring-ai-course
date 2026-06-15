@@ -28,6 +28,14 @@ subprojects {
         if (project.hasProperty('geminiApiKey')) {
             environment 'GEMINI_API_KEY', project.property('geminiApiKey')
         }
+
+        if (project.hasProperty('openaiApiKey')) {
+            environment 'OPENAI_API_KEY', project.property('geminiApiKey')
+        }
+
+        if (project.hasProperty('anthropicApiKey')) {
+            environment 'ANTHROPIC_API_KEY', project.property('geminiApiKey')
+        }
     }
 
     ext {

@@ -1,5 +1,8 @@
-# Root gradle.properties file
+# Root gradle.properties file example.
+# 1.Rename to gradle.properties
+# 2.Add gradle.properties to .gitignore so it will not be tracked by git with your api keys
+
 geminiApiKey=<YOUR_GEMINI_API_KEY>
 openaiApiKey=<YOUR_OPENAI_API_KEY>
-claudeApiKey=<YOUR_CLAUDE_API_KEY>
+anthropicApiKey=<YOUR_CLAUDE_API_KEY>
 

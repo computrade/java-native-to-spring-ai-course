@@ -24,6 +24,12 @@ subprojects {
         }
     }
 
+    tasks.named('bootRun') {
+        if (project.hasProperty('geminiApiKey')) {
+            environment 'GEMINI_API_KEY', project.property('geminiApiKey')
+        }
+    }
+
     ext {
         set('springAiVersion', "2.0.0")
     }

@@ -1,0 +1,5 @@
+# Root gradle.properties file
+geminiApiKey=<YOUR_GEMINI_API_KEY>
+openaiApiKey=<YOUR_OPENAI_API_KEY>
+claudeApiKey=<YOUR_CLAUDE_API_KEY>
+

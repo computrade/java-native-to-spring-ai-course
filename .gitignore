@@ -8,6 +8,7 @@ gen/
 # Gradle build directories
 .gradle/
 build/
+gradle.properties
 
 # Compiled class file
 *.class

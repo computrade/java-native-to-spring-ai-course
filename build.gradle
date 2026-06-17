@@ -51,11 +51,12 @@ subprojects {
         }
 
         if (project.hasProperty('openaiApiKey')) {
-            environment 'OPENAI_API_KEY', project.property('geminiApiKey')
+            environment 'OPENAI_API_KEY', project.property('openaiApiKey')
         }
 
         if (project.hasProperty('anthropicApiKey')) {
-            environment 'ANTHROPIC_API_KEY', project.property('geminiApiKey')
+            environment 'ANTHROPIC_API_KEY', project.property('anthropicApiKey')
         }
     }
+
 }

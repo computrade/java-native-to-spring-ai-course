@@ -16,7 +16,7 @@ public class ChatClientConfig {
         return builder
                 //.defaultSystem(getSystemPromptString())
                 // Add the built-in logger advisor here
-                .defaultAdvisors(new SimpleLoggerAdvisor())
+                //.defaultAdvisors(new SimpleLoggerAdvisor())
                 .build();
     }
 

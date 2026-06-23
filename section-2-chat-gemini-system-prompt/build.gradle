@@ -1,0 +1,5 @@
+description = 'section-2-chat-gemini-system-prompt'
+
+dependencies {
+    implementation 'org.springframework.ai:spring-ai-starter-model-google-genai'    // Gemini
+}

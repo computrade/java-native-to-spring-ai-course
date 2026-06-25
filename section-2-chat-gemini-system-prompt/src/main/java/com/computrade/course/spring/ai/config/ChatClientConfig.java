@@ -13,9 +13,9 @@ public class ChatClientConfig {
     @Bean
     public ChatClient chatClient(ChatClient.Builder builder) {
         return builder
-                .defaultSystem(getSystemPromptString())
+                //.defaultSystem(getSystemPromptString())
                 // Add the built-in logger advisor her
-                .defaultAdvisors(new SimpleLoggerAdvisor())
+                //.defaultAdvisors(new SimpleLoggerAdvisor())
                 .build();
     }
 

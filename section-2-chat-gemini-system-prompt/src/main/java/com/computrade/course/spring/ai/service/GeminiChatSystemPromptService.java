@@ -26,8 +26,12 @@ public class GeminiChatSystemPromptService {
     /**
      * Executes a standard blocking call to Gemini
      */
-    public String getChatResponse(String prompt) {
-        return chatClient.prompt(prompt)
+    public String getChatResponse(String age, String risk, String userQuestion) {
+        return chatClient.prompt(userQuestion)
+                .system(sp -> sp.params(Map.of(
+                        "userAge", age,
+                        "riskTolerance", risk
+                )))
                 .call()
                 .content();
     }
@@ -121,7 +125,7 @@ public class GeminiChatSystemPromptService {
 
     private static @NonNull String getSystemPromptString() {
         String systemTemplateText = """
-            You are a qualified AI Financial Advisor. 
+            You are a qualified AI Financial Advisor.
             Tailor your response to the following client parameters:
             - Age: {userAge}
             - Risk Profile: {riskTolerance}

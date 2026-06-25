@@ -8,7 +8,6 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,9 +18,14 @@ public class GeminiChatSystemPromptController {
     private final GeminiChatSystemPromptService geminiChatSystemPromptService;
 
     @GetMapping("/chat")
-    public ResponseEntity<String> chat(@RequestParam String prompt) {
-        String chatResponse = geminiChatSystemPromptService.getChatResponse(prompt);
-        return ResponseEntity.ok(chatResponse);
+    public ResponseEntity<String> chat(@Valid @ParameterObject AdviceRequest request) {
+        String adviceResponse = geminiChatSystemPromptService.getChatResponse(
+                String.valueOf(request.age()),
+                request.risk().getLabel(),
+                request.prompt());
+
+        // Return a standard 200 OK response containing the AI text
+        return ResponseEntity.ok(adviceResponse);
     }
 
 

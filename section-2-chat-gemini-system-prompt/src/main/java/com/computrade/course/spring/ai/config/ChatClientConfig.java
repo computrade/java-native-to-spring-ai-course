@@ -6,7 +6,6 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class ChatClientConfig {
@@ -14,9 +13,9 @@ public class ChatClientConfig {
     @Bean
     public ChatClient chatClient(ChatClient.Builder builder) {
         return builder
-                //.defaultSystem(getSystemPromptString())
-                // Add the built-in logger advisor here
-                //.defaultAdvisors(new SimpleLoggerAdvisor())
+                .defaultSystem(getSystemPromptString())
+                // Add the built-in logger advisor her
+                .defaultAdvisors(new SimpleLoggerAdvisor())
                 .build();
     }
 

@@ -1,11 +1,15 @@
 package com.computrade.course.spring.ai.model;
 
+import lombok.Getter;
+
+@Getter
 public enum RiskProfile {
 
     CONSERVATIVE("Conservative"),
     MODERATE("Moderate"),
     AGGRESSIVE("Aggressive");
 
+    // Getter to retrieve the human-readable text
     private final String label;
 
     // Constructor
@@ -13,8 +17,4 @@ public enum RiskProfile {
         this.label = label;
     }
 
-    // Getter to retrieve the human-readable text
-    public String getLabel() {
-        return this.label;
-    }
 }

@@ -42,11 +42,11 @@ public class GeminiAdvancedChatService {
         // 2. Extract Response Generation Meta (e.g., Finish Reason)
         Generation generation = response.getResult();
         String finishReason = generation.getMetadata().getFinishReason();
-        log.info("Why the model stopped: " + finishReason);
+        log.info("Why the model stopped: {}", finishReason);
 
 
         if (response.getMetadata() != null) {
-            log.info("Rate Limit Info / Usage: " + response.getMetadata().getUsage());
+            log.info("Rate Limit Info / Usage: {}", response.getMetadata().getUsage());
         }
 
 
@@ -75,11 +75,11 @@ public class GeminiAdvancedChatService {
         // 2. Extract Response Generation Meta (e.g., Finish Reason)
         Generation generation = response.getResult();
         String finishReason = generation.getMetadata().getFinishReason();
-        log.info("Why the model stopped: " + finishReason);
+        log.info("Why the model stopped: {}", finishReason);
 
 
         if (response.getMetadata() != null) {
-            log.info("Rate Limit Info / Usage: " + response.getMetadata().getUsage());
+            log.info("Rate Limit Info / Usage: {}", response.getMetadata().getUsage());
         }
 
         // Navigate down to get the raw text content:

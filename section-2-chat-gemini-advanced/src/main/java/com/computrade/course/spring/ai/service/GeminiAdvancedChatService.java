@@ -89,6 +89,34 @@ public class GeminiAdvancedChatService {
     }
 
 
+    public String getChatResponseWithConfigs(double temperature, Integer maxToken,String userQuestion) {
+
+        // 1. Get the FULL ChatResponse object instead of just the string content
+        ChatResponse response = chatClient.prompt()
+                .user(userQuestion)
+                .options(ChatOptions.builder().
+
+                        temperature(temperature).maxTokens(maxToken))
+                .call()
+                .chatResponse();
+
+        // 2. Extract Response Generation Meta (e.g., Finish Reason)
+        Generation generation = response.getResult();
+        String finishReason = generation.getMetadata().getFinishReason();
+        log.info("Why the model stopped: {}", finishReason);
+
+
+        if (response.getMetadata() != null) {
+            log.info("Rate Limit Info / Usage: {}", response.getMetadata().getUsage());
+        }
+
+        // Navigate down to get the raw text content:
+        String resultString = response.getResult().getOutput().getText();
+        return resultString;
+
+    }
+
+
     private @NonNull String getRenderedSystemPrompt(String age, String risk) {
         PromptTemplateStringActions stringActions = new PromptTemplate(systemPromptResource);
 

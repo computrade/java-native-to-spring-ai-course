@@ -1,6 +1,7 @@
 package com.computrade.course.spring.ai.controller;
 
 import com.computrade.course.spring.ai.model.AdviceRequest;
+import com.computrade.course.spring.ai.model.ConfigRequest;
 import com.computrade.course.spring.ai.service.GeminiAdvancedChatService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,20 @@ public class GeminiAdvancedChatController {
             String chatResponse = geminiChatService.getChatResponseLocalOptions(
                     String.valueOf(request.age()),
                     request.risk().getLabel(),
+                    request.prompt());
+            return ResponseEntity.ok(chatResponse);
+        } catch (Exception e) {
+            log.error("Error processing chat: {}", e.getMessage(), e);
+            return ResponseEntity.internalServerError().body("Error processing chat: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/chat/configs")
+    public ResponseEntity<String> chatWithConfigs(@Valid @ParameterObject ConfigRequest request) {
+        try {
+            String chatResponse = geminiChatService.getChatResponseWithConfigs(
+                    request.temperature(),
+                    request.maxTokens(),
                     request.prompt());
             return ResponseEntity.ok(chatResponse);
         } catch (Exception e) {

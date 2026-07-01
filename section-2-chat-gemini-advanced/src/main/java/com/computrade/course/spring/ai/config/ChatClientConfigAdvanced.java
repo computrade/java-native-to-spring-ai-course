@@ -23,7 +23,7 @@ public class ChatClientConfigAdvanced {
                                  ChatOptions chatOptions) {
 
         return builder
-                .defaultOptions(chatOptions.mutate())
+                //.defaultOptions(chatOptions.mutate())
                 .defaultAdvisors(new SimpleLoggerAdvisor())
                 .build();
     }

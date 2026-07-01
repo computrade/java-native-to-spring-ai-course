@@ -3,7 +3,9 @@ package com.computrade.course.spring.ai.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.metadata.ChatGenerationMetadata;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.ChatOptions;
@@ -39,23 +41,14 @@ public class GeminiAdvancedChatService {
                 .call()
                 .chatResponse();
 
-        // 2. Extract Response Generation Meta (e.g., Finish Reason)
-        Generation generation = response.getResult();
-        String finishReason = generation.getMetadata().getFinishReason();
-        log.info("Why the model stopped: {}", finishReason);
-
-
-        if (response.getMetadata() != null) {
-            log.info("Rate Limit Info / Usage: {}", response.getMetadata().getUsage());
-        }
-
+        assert response != null;
+        logChatResponse(response);
 
         // Navigate down to get the raw text content:
-        String resultString = response.getResult().getOutput().getText();
+        String resultString = getTextFromChatResponse(response);
         return resultString;
 
     }
-
 
 
 
@@ -72,18 +65,9 @@ public class GeminiAdvancedChatService {
                 .call()
                 .chatResponse();
 
-        // 2. Extract Response Generation Meta (e.g., Finish Reason)
-        Generation generation = response.getResult();
-        String finishReason = generation.getMetadata().getFinishReason();
-        log.info("Why the model stopped: {}", finishReason);
-
-
-        if (response.getMetadata() != null) {
-            log.info("Rate Limit Info / Usage: {}", response.getMetadata().getUsage());
-        }
-
+        logChatResponse(response);
         // Navigate down to get the raw text content:
-        String resultString = response.getResult().getOutput().getText();
+        String resultString = getTextFromChatResponse(response);
         return resultString;
 
     }
@@ -94,24 +78,14 @@ public class GeminiAdvancedChatService {
         // 1. Get the FULL ChatResponse object instead of just the string content
         ChatResponse response = chatClient.prompt()
                 .user(userQuestion)
-                .options(ChatOptions.builder().
-
-                        temperature(temperature).maxTokens(maxToken))
+                .options(ChatOptions.builder().temperature(temperature).maxTokens(maxToken))
                 .call()
                 .chatResponse();
 
-        // 2. Extract Response Generation Meta (e.g., Finish Reason)
-        Generation generation = response.getResult();
-        String finishReason = generation.getMetadata().getFinishReason();
-        log.info("Why the model stopped: {}", finishReason);
-
-
-        if (response.getMetadata() != null) {
-            log.info("Rate Limit Info / Usage: {}", response.getMetadata().getUsage());
-        }
+        logChatResponse(response);
 
         // Navigate down to get the raw text content:
-        String resultString = response.getResult().getOutput().getText();
+        String resultString = getTextFromChatResponse(response);
         return resultString;
 
     }
@@ -126,6 +100,22 @@ public class GeminiAdvancedChatService {
                 "riskTolerance", risk
         ));
         return renderedSystemPrompt;
+    }
+
+
+    private static void logChatResponse(ChatResponse response) {
+        // 2. Extract Response Generation Meta (e.g., Finish Reason)
+        assert response != null;
+        Generation generation = response.getResult();
+        assert generation != null;
+        ChatGenerationMetadata metadata = generation.getMetadata();
+        String finishReason = metadata.getFinishReason();
+        log.info("Why the model stopped: {}", finishReason);
+        log.info("Rate Limit Info / Usage: {}", response.getMetadata().getUsage());
+    }
+
+    private static @Nullable String getTextFromChatResponse(ChatResponse response) {
+        return response.getResult().getOutput().getText();
     }
 
 }

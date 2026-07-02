@@ -15,7 +15,7 @@ public class ChatClientConfigAdvanced {
 
     @Bean
     public ChatOptions applicationDefaultOptions() {
-        return ChatOptions.builder().temperature(0.5).maxTokens(200).stopSequences(List.of("##STOP")).build();
+        return ChatOptions.builder().temperature(0.1).maxTokens(2000).stopSequences(List.of("##STOP")).build();
     }
 
     @Bean

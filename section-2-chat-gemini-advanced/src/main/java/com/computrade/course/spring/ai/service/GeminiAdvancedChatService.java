@@ -61,7 +61,7 @@ public class GeminiAdvancedChatService {
         ChatResponse response = chatClient.prompt()
                 .user(userQuestion)
                 .system(renderedSystemPrompt)
-                .options(ChatOptions.builder().temperature(0.9).maxTokens(1000))
+                .options(ChatOptions.builder().temperature(0.1).maxTokens(1000))
                 .call()
                 .chatResponse();
 

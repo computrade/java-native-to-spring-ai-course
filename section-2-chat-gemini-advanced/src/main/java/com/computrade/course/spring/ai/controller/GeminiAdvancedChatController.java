@@ -1,7 +1,7 @@
 package com.computrade.course.spring.ai.controller;
 
 import com.computrade.course.spring.ai.model.AdviceRequest;
-import com.computrade.course.spring.ai.model.ConfigRequest;
+import com.computrade.course.spring.ai.model.AdviceWithConfigRequest;
 import com.computrade.course.spring.ai.service.GeminiAdvancedChatService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -48,10 +48,12 @@ public class GeminiAdvancedChatController {
         }
     }
 
-    @GetMapping("/chat/configs")
-    public ResponseEntity<String> chatWithConfigs(@Valid @ParameterObject ConfigRequest request) {
+    @GetMapping("/chat/local-options/configs")
+    public ResponseEntity<String> chatWithConfigs(@Valid @ParameterObject AdviceWithConfigRequest request) {
         try {
             String chatResponse = geminiChatService.getChatResponseWithConfigs(
+                    String.valueOf(request.age()),
+                    request.risk().getLabel(),
                     request.temperature(),
                     request.maxTokens(),
                     request.prompt());

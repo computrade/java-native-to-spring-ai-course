@@ -61,7 +61,7 @@ public class GeminiAdvancedChatService {
         ChatResponse response = chatClient.prompt()
                 .user(userQuestion)
                 .system(renderedSystemPrompt)
-                .options(ChatOptions.builder().temperature(0.1).maxTokens(1000))
+                .options(ChatOptions.builder().temperature(0.1).maxTokens(500))
                 .call()
                 .chatResponse();
 
@@ -73,11 +73,15 @@ public class GeminiAdvancedChatService {
     }
 
 
-    public String getChatResponseWithConfigs(double temperature, Integer maxToken,String userQuestion) {
+    public String getChatResponseWithConfigs(String age, String risk,double temperature, Integer maxToken,String userQuestion) {
+
+        // 1. Instantiate the template using the PromptTemplateStringActions interface
+        String renderedSystemPrompt = getRenderedSystemPrompt(age, risk);
 
         // 1. Get the FULL ChatResponse object instead of just the string content
         ChatResponse response = chatClient.prompt()
                 .user(userQuestion)
+                .system(renderedSystemPrompt)
                 .options(ChatOptions.builder().temperature(temperature).maxTokens(maxToken))
                 .call()
                 .chatResponse();

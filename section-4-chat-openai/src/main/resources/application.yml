@@ -1,6 +1,6 @@
 spring:
   application:
-    name: section-2-chat-openai
+    name: section-4-chat-openai
   ai:
     openai:
       api-key: ${OPENAI_API_KEY}

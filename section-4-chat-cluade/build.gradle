@@ -1,6 +1,0 @@
-description = 'section-4-chat-cluade'
-
-dependencies {
-    implementation 'org.springframework.ai:spring-ai-starter-model-anthropic'       // Claude
-
-}

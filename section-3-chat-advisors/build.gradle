@@ -1,0 +1,5 @@
+description = 'section-3-chat-advisors'
+
+dependencies {
+    implementation 'org.springframework.ai:spring-ai-starter-model-google-genai'    // Gemini
+}

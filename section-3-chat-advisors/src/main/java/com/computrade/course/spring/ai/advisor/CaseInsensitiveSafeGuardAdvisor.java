@@ -70,7 +70,7 @@ public class CaseInsensitiveSafeGuardAdvisor implements CallAdvisor {
     }
 
     @Override
-    public String getName() {
+    public @NonNull String getName() {
         return "CaseInsensitiveSafeGuardAdvisor";
     }
 
@@ -85,7 +85,7 @@ public class CaseInsensitiveSafeGuardAdvisor implements CallAdvisor {
 
         try (
             InputStream inputStream = sensitiveWordsFile.getInputStream()) {
-            // 2. Use the injected mapper to read the file
+            // 2. Use the injected mapper to read the file into a SensitiveWordsConfig object
             SensitiveWordsConfig config = objectMapper.readValue(inputStream, SensitiveWordsConfig.class);
             List<String> sensitiveWordsList = config.getAllWords();
 

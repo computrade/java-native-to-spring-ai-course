@@ -5,7 +5,6 @@ import com.computrade.course.spring.ai.advisor.CaseInsensitiveSafeGuardAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SafeGuardAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
-import org.springframework.ai.chat.client.advisor.api.Advisor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -42,7 +41,7 @@ public class ChatClientAdvisors {
     public ChatClient chatClientWithSafeGuardAdvisors(ChatClient.Builder builder) {
 
         return builder
-                .defaultAdvisors(getFinishReasonLoggerAdvisorWithBuilder(),getSafeGuardAdvisor())
+                .defaultAdvisors(new SimpleLoggerAdvisor(),getSafeGuardAdvisor())
                 .build();
     }
 
@@ -51,11 +50,9 @@ public class ChatClientAdvisors {
     public ChatClient chatClientWithCustomSafeGuardAdvisors(ChatClient.Builder builder) {
 
         return builder
-                .defaultAdvisors(getFinishReasonLoggerAdvisorWithBuilder(),getCustomSafeGuardAdvisor())
+                .defaultAdvisors(new SimpleLoggerAdvisor(),getCustomSafeGuardAdvisor())
                 .build();
     }
-
-
 
 
 

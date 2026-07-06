@@ -51,7 +51,6 @@ public class CaseInsensitiveSafeGuardAdvisor implements CallAdvisor {
         // 3. Perform case-insensitive matching against our pre-processed list
         if (!this.lowercaseSensitiveWords.isEmpty()
                 && this.lowercaseSensitiveWords.stream().anyMatch(lowerCaseContent::contains)) {
-
             // Short-circuit the pipeline and return the fallback message
             return createFailureResponse(chatClientRequest);
         }

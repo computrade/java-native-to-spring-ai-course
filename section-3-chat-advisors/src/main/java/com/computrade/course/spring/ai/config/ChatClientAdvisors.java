@@ -41,7 +41,7 @@ public class ChatClientAdvisors {
     public ChatClient chatClientWithSafeGuardAdvisors(ChatClient.Builder builder) {
 
         return builder
-                .defaultAdvisors(new SimpleLoggerAdvisor(),getSafeGuardAdvisor())
+                .defaultAdvisors(SimpleLoggerAdvisor.builder().order(10).build(),getSafeGuardAdvisor())
                 .build();
     }
 
@@ -50,7 +50,7 @@ public class ChatClientAdvisors {
     public ChatClient chatClientWithCustomSafeGuardAdvisors(ChatClient.Builder builder) {
 
         return builder
-                .defaultAdvisors(new SimpleLoggerAdvisor(),getCustomSafeGuardAdvisor())
+                .defaultAdvisors(SimpleLoggerAdvisor.builder().order(10).build(),getCustomSafeGuardAdvisor())
                 .build();
     }
 

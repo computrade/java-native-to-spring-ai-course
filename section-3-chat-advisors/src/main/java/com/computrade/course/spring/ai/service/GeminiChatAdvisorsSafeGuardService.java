@@ -29,6 +29,8 @@ public class GeminiChatAdvisorsSafeGuardService {
 
     public String getChatResponseWithSafeGuardAdvisors(String userQuestion) {
 
+        log.info("Calling LLM with User question: {}", userQuestion);
+
         ChatResponse response = chatClientWithSafeGuardAdvisors.prompt()
                 .user(userQuestion)
                 .call()
@@ -41,6 +43,8 @@ public class GeminiChatAdvisorsSafeGuardService {
     }
 
     public String getChatResponseWithCustomSafeGuardAdvisors(String userQuestion) {
+
+        log.info("Calling LLM with Custom Safe Guard and User question: {}", userQuestion);
 
         ChatResponse response = chatClientWithCustomSafeGuardAdvisors.prompt()
                 .user(userQuestion)

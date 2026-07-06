@@ -1,10 +1,15 @@
 package com.computrade.course.spring.ai.config;
 
 
+import com.computrade.course.spring.ai.advisor.CaseInsensitiveSafeGuardAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SafeGuardAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.client.advisor.api.Advisor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 public class ChatClientAdvisors {
@@ -15,6 +20,7 @@ public class ChatClientAdvisors {
                 .defaultAdvisors(new SimpleLoggerAdvisor())
                 .build();
     }
+
 
     @Bean
     public ChatClient chatClientWithLoggerBuilder(ChatClient.Builder builder) {
@@ -31,6 +37,27 @@ public class ChatClientAdvisors {
                 .defaultAdvisors(getFinishReasonLoggerAdvisorWithConst())
                 .build();
     }
+
+    @Bean
+    public ChatClient chatClientWithSafeGuardAdvisors(ChatClient.Builder builder) {
+
+        return builder
+                .defaultAdvisors(getFinishReasonLoggerAdvisorWithBuilder(),getSafeGuardAdvisor())
+                .build();
+    }
+
+
+    @Bean
+    public ChatClient chatClientWithCustomSafeGuardAdvisors(ChatClient.Builder builder) {
+
+        return builder
+                .defaultAdvisors(getFinishReasonLoggerAdvisorWithBuilder(),getCustomSafeGuardAdvisor())
+                .build();
+    }
+
+
+
+
 
 
     private SimpleLoggerAdvisor getFinishReasonLoggerAdvisorWithBuilder() {
@@ -65,5 +92,16 @@ public class ChatClientAdvisors {
         return finishReasonLogger;
     }
 
+    private SafeGuardAdvisor getSafeGuardAdvisor() {
+
+        SafeGuardAdvisor safeGuardAdvisor = SafeGuardAdvisor.builder()
+                .sensitiveWords(List.of("Password", "SSN","credit card","secret key")).order(0).build();
+        return safeGuardAdvisor;
+    }
+
+    private CaseInsensitiveSafeGuardAdvisor getCustomSafeGuardAdvisor() {
+        CaseInsensitiveSafeGuardAdvisor customSafeGuardAdvisor = new CaseInsensitiveSafeGuardAdvisor(List.of("Password", "SSN", "credit card", "secret key"));
+        return customSafeGuardAdvisor;
+    }
 
 }

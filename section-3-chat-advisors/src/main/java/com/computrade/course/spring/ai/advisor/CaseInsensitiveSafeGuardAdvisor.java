@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class CaseInsensitiveSafeGuardAdvisor implements CallAdvisor {
 
-    private static final String DEFAULT_FAILURE_RESPONSE = "CaseInsensitiveSafeGuardAdvisor: I'm unable to respond to that due to sensitive content. Please rephrase your question.";
+    private static final String DEFAULT_FAILURE_RESPONSE = "🛑 Security Exception: Prompt blocked due to sensitive data policies.";
 
     private final List<String> lowercaseSensitiveWords;
 

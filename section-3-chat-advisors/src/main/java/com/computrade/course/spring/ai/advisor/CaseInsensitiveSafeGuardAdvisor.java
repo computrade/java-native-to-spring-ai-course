@@ -1,5 +1,8 @@
 package com.computrade.course.spring.ai.advisor;
 
+import com.computrade.course.spring.ai.model.SensitiveWordsConfig;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.springframework.ai.chat.client.ChatClientRequest;
 import org.springframework.ai.chat.client.ChatClientResponse;
@@ -8,30 +11,36 @@ import org.springframework.ai.chat.client.advisor.api.CallAdvisorChain;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.model.Generation;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.Ordered;
+import org.springframework.core.io.Resource;
 import org.springframework.util.CollectionUtils;
+import tools.jackson.databind.ObjectMapper;
 
+import jakarta.annotation.PostConstruct;
+import org.springframework.stereotype.Component;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
+@RequiredArgsConstructor
+@Component
 public class CaseInsensitiveSafeGuardAdvisor implements CallAdvisor {
 
     private static final String DEFAULT_FAILURE_RESPONSE = "🛑 Security Exception: Prompt blocked due to sensitive data policies.";
 
-    private final List<String> lowercaseSensitiveWords;
+    private final ObjectMapper objectMapper;
+    private List<String> lowercaseSensitiveWords = new ArrayList<>();
 
-    public CaseInsensitiveSafeGuardAdvisor(List<String> sensitiveWords) {
-        // Pre-convert to lowercase at startup to optimize execution performance
-        if (!CollectionUtils.isEmpty(sensitiveWords)) {
-            this.lowercaseSensitiveWords = sensitiveWords.stream()
-                    .map(String::toLowerCase)
-                    .collect(Collectors.toList());
-        } else {
-            this.lowercaseSensitiveWords = List.of();
-        }
-    }
+    @Value("classpath:configs/sensitive-words.json")
+    private Resource sensitiveWordsFile;
 
+
+    
     @Override
     public @NonNull ChatClientResponse adviseCall(ChatClientRequest chatClientRequest, @NonNull CallAdvisorChain callAdvisorChain) {
 
@@ -69,6 +78,27 @@ public class CaseInsensitiveSafeGuardAdvisor implements CallAdvisor {
     public int getOrder() {
         // Always run at the absolute front of the line to catch unsafe content early
         return Ordered.HIGHEST_PRECEDENCE;
+    }
+
+    @PostConstruct
+    private void initSensitiveWords() {
+
+        try (
+            InputStream inputStream = sensitiveWordsFile.getInputStream()) {
+            // 2. Use the injected mapper to read the file
+            SensitiveWordsConfig config = objectMapper.readValue(inputStream, SensitiveWordsConfig.class);
+            List<String> sensitiveWordsList = config.getAllWords();
+
+            if (!CollectionUtils.isEmpty(sensitiveWordsList)) {
+                this.lowercaseSensitiveWords = sensitiveWordsList.stream()
+                        .map(String::toLowerCase)
+                        .collect(Collectors.toList());
+            }
+
+        } catch (IOException e) {
+            log.error("Failed to load sensitive words JSON file configs/sensitive-words.json", e);
+            throw new RuntimeException("Failed to load sensitive words JSON file", e);
+        }
     }
 }
 

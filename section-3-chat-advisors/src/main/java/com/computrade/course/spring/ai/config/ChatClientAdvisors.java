@@ -2,20 +2,14 @@ package com.computrade.course.spring.ai.config;
 
 
 import com.computrade.course.spring.ai.advisor.CaseInsensitiveSafeGuardAdvisor;
-import com.computrade.course.spring.ai.model.SensitiveWordsConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SafeGuardAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.Resource;
-import tools.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 @Slf4j
@@ -23,10 +17,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChatClientAdvisors {
 
-    @Value("classpath:configs/sensitive-words.json")
-    private Resource sensitiveWordsFile;
+    private final CaseInsensitiveSafeGuardAdvisor caseInsensitiveSafeGuardAdvisor;
 
-    private final ObjectMapper objectMapper;
+
 
     @Bean
     public ChatClient defaultChatClient(ChatClient.Builder builder) {
@@ -65,7 +58,7 @@ public class ChatClientAdvisors {
     public ChatClient chatClientWithCustomSafeGuardAdvisors(ChatClient.Builder builder) {
 
         return builder
-                .defaultAdvisors(SimpleLoggerAdvisor.builder().order(10).build(),getCustomSafeGuardAdvisor())
+                .defaultAdvisors(SimpleLoggerAdvisor.builder().order(10).build(), caseInsensitiveSafeGuardAdvisor)
                 .build();
     }
 
@@ -111,21 +104,5 @@ public class ChatClientAdvisors {
         return safeGuardAdvisor;
     }
 
-    private CaseInsensitiveSafeGuardAdvisor getCustomSafeGuardAdvisor() {
-
-        try (InputStream inputStream = sensitiveWordsFile.getInputStream()) {
-            // 2. Use the injected mapper to read the file
-            SensitiveWordsConfig config = objectMapper.readValue(inputStream, SensitiveWordsConfig.class);
-            List<String> sensitiveWordsList = config.getAllWords();
-            CaseInsensitiveSafeGuardAdvisor customSafeGuardAdvisor = new CaseInsensitiveSafeGuardAdvisor(sensitiveWordsList );
-            return customSafeGuardAdvisor;
-        } catch (IOException e) {
-            log.error("Failed to load sensitive words JSON file", e);
-            throw new RuntimeException("Failed to load sensitive words JSON file", e);
-        }
-
-
-
-    }
 
 }

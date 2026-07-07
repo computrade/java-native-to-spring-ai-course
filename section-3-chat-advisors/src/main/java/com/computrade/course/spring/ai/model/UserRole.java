@@ -2,9 +2,6 @@ package com.computrade.course.spring.ai.model;
 
 import lombok.Getter;
 
-import java.util.EnumSet;
-import java.util.Set;
-
 @Getter
 public enum UserRole {
 

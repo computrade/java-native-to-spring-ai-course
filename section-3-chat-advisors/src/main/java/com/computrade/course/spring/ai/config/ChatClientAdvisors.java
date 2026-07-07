@@ -2,6 +2,7 @@ package com.computrade.course.spring.ai.config;
 
 
 import com.computrade.course.spring.ai.advisor.CaseInsensitiveSafeGuardAdvisor;
+import com.computrade.course.spring.ai.advisor.RoleGuardAdvisor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
@@ -18,8 +19,7 @@ import java.util.List;
 public class ChatClientAdvisors {
 
     private final CaseInsensitiveSafeGuardAdvisor caseInsensitiveSafeGuardAdvisor;
-
-
+    private final RoleGuardAdvisor roleGuardAdvisor;
 
     @Bean
     public ChatClient defaultChatClient(ChatClient.Builder builder) {
@@ -49,7 +49,7 @@ public class ChatClientAdvisors {
     public ChatClient chatClientWithSafeGuardAdvisors(ChatClient.Builder builder) {
 
         return builder
-                .defaultAdvisors(SimpleLoggerAdvisor.builder().order(10).build(),getSafeGuardAdvisor())
+                .defaultAdvisors(SimpleLoggerAdvisor.builder().order(10).build(), getSafeGuardAdvisor())
                 .build();
     }
 
@@ -62,7 +62,13 @@ public class ChatClientAdvisors {
                 .build();
     }
 
+    @Bean
+    public ChatClient chatClientWithRoleGuardAdvisors(ChatClient.Builder builder) {
 
+        return builder
+                .defaultAdvisors(SimpleLoggerAdvisor.builder().order(10).build(), caseInsensitiveSafeGuardAdvisor, roleGuardAdvisor)
+                .build();
+    }
 
 
     private SimpleLoggerAdvisor getFinishReasonLoggerAdvisorWithBuilder() {
@@ -100,7 +106,7 @@ public class ChatClientAdvisors {
     private SafeGuardAdvisor getSafeGuardAdvisor() {
 
         SafeGuardAdvisor safeGuardAdvisor = SafeGuardAdvisor.builder()
-                .sensitiveWords(List.of("Password", "SSN","credit card","secret key")).order(0).build();
+                .sensitiveWords(List.of("Password", "SSN", "credit card", "secret key")).order(0).build();
         return safeGuardAdvisor;
     }
 

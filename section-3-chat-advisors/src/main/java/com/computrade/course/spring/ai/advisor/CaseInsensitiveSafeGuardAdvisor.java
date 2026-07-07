@@ -70,7 +70,7 @@ public class CaseInsensitiveSafeGuardAdvisor implements CallAdvisor {
 
     @Override
     public @NonNull String getName() {
-        return "CaseInsensitiveSafeGuardAdvisor";
+        return CaseInsensitiveSafeGuardAdvisor.class.getName();
     }
 
     @Override

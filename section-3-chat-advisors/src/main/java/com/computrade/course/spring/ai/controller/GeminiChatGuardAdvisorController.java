@@ -39,5 +39,14 @@ public class GeminiChatGuardAdvisorController {
         }
     }
 
-
+    @GetMapping("/chat/guard/context")
+    public ResponseEntity<String> chatGuardContext(@Valid String userQuestion) {
+        try {
+            String chatResponse = geminiChatAdvisorsSafeGuardService.getChatResponseWithContext(userQuestion);
+            return ResponseEntity.ok(chatResponse);
+        } catch (Exception e) {
+            log.error("Error processing chat: {}", e.getMessage(), e);
+            return ResponseEntity.internalServerError().body("Error processing chat: " + e.getMessage());
+        }
+    }
 }

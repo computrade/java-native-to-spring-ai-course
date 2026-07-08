@@ -63,7 +63,7 @@ public class ChatStructuredOutputService {
 
         return defaultChatClient.prompt()
                 .user(u -> u.text("Generate a realistic electronics store recommendations catalog for the category: {category}. " +
-                                "Provide a fitting store name and exactly 2 top featured products.")
+                                "Provide a fitting store name and exactly 5 top featured products.")
                         .param("category", category))
                 .call()
                 .entity(StoreCatalog.class);

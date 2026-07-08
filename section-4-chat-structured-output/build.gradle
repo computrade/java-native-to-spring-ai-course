@@ -1,0 +1,5 @@
+description = 'section-4-chat-structured-output'
+
+dependencies {
+    implementation 'org.springframework.ai:spring-ai-starter-model-google-genai'    // Gemini
+}

@@ -1,0 +1,13 @@
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: DEBUG
+
+spring:
+  application:
+    name: section-4-chat-structured-output
+  ai:
+    google:
+      genai:
+        api-key: ${GEMINI_API_KEY}
+        chat:
+          model: gemini-3.5-flash

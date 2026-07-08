@@ -1,6 +1,0 @@
-description = 'section-4-chat-openai'
-
-dependencies {
-    implementation 'org.springframework.ai:spring-ai-starter-model-openai'
-
-}

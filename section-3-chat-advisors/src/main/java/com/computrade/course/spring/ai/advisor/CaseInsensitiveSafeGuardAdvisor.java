@@ -1,6 +1,7 @@
 package com.computrade.course.spring.ai.advisor;
 
 import com.computrade.course.spring.ai.model.SensitiveWordsConfig;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
@@ -14,11 +15,10 @@ import org.springframework.ai.chat.model.Generation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.Resource;
-import org.springframework.util.CollectionUtils;
-import tools.jackson.databind.ObjectMapper;
-
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+import tools.jackson.databind.json.JsonMapper;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class CaseInsensitiveSafeGuardAdvisor implements CallAdvisor {
 
     private static final String DEFAULT_FAILURE_RESPONSE = "🛑 Security Exception: Prompt blocked due to sensitive data policies.";
 
-    private final ObjectMapper objectMapper;
+    private final JsonMapper jsonMapper; // in Jackson 3, ObjectMapper is replaced with JsonMapper for better performance and features
     private List<String> lowercaseSensitiveWords = new ArrayList<>();
 
     @Value("classpath:configs/sensitive-words.json")
@@ -85,7 +85,7 @@ public class CaseInsensitiveSafeGuardAdvisor implements CallAdvisor {
         try (
             InputStream inputStream = sensitiveWordsFile.getInputStream()) {
             // 2. Use the injected mapper to read the file into a SensitiveWordsConfig object
-            SensitiveWordsConfig config = objectMapper.readValue(inputStream, SensitiveWordsConfig.class);
+            SensitiveWordsConfig config = jsonMapper.readValue(inputStream, SensitiveWordsConfig.class);
             List<String> sensitiveWordsList = config.getAllWords();
 
             if (!CollectionUtils.isEmpty(sensitiveWordsList)) {

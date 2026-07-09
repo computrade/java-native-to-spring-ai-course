@@ -1,13 +1,18 @@
 package com.computrade.course.spring.ai.service;
 
+import com.computrade.course.spring.ai.advisor.JavaBeanValidationAdvisor;
 import com.computrade.course.spring.ai.model.CarDetails;
 import com.computrade.course.spring.ai.model.ProductInfo;
 import com.computrade.course.spring.ai.model.StoreCatalog;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.StructuredOutputValidationAdvisor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +23,9 @@ import java.util.Map;
 public class ChatStructuredOutputService {
 
     private final ChatClient defaultChatClient;
+    private final LocalValidatorFactoryBean validatorFactory;
+    private final JsonMapper jsonMapper;
+
 
     public List<String> getTopSkills(String topic) {
 
@@ -61,10 +69,33 @@ public class ChatStructuredOutputService {
 
     public StoreCatalog getStoreCatalog(String category) {
 
+        StructuredOutputValidationAdvisor validationAdvisor = StructuredOutputValidationAdvisor.builder()
+                .outputType(StoreCatalog.class) // התשתית תריץ אוטומטית את JsonSchemaGenerator.generateForType()
+                .maxRepeatAttempts(3)          // מספר הניסיונות החוזרים לתיקון מול ה-LLM במקרה של כישלון
+                .build();
+
         return defaultChatClient.prompt()
                 .user(u -> u.text("Generate a realistic electronics store recommendations catalog for the category: {category}. " +
                                 "Provide a fitting store name and exactly 5 top featured products.")
                         .param("category", category))
+                .advisors(validationAdvisor)
+                .call()
+                .entity(StoreCatalog.class);
+    }
+
+    public StoreCatalog getStoreCatalogWithCustomValidation(String category) {
+
+        JavaBeanValidationAdvisor customAdvisor = new JavaBeanValidationAdvisor(
+                StoreCatalog.class,// Output Type for validation
+                3,  // Max Fix Attempts in case of validation failure
+                20   // Advisor Order (lower number means higher priority)
+        );
+
+        return defaultChatClient.prompt()
+                .user(u -> u.text("Generate a realistic electronics store recommendations catalog for the category: {category}. " +
+                                "Provide a fitting store name and exactly 5 top featured products.")
+                        .param("category", category))
+                .advisors(customAdvisor)
                 .call()
                 .entity(StoreCatalog.class);
     }

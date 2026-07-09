@@ -2,9 +2,7 @@ package com.computrade.course.spring.ai.service;
 
 import com.computrade.course.spring.ai.advisor.JavaBeanValidationAdvisor;
 import com.computrade.course.spring.ai.model.CarDetails;
-import com.computrade.course.spring.ai.model.ProductInfo;
 import com.computrade.course.spring.ai.model.StoreCatalog;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
@@ -58,13 +56,13 @@ public class ChatStructuredOutputService {
                 .entity(CarDetails.class); // Magically deserialize the structured output into a CarDetails object
     }
 
-    public List<ProductInfo> getProductCatalog(String category) {
+    public List<CarDetails> getCarCatalog(String category) {
 
         return defaultChatClient.prompt()
-                .user(u -> u.text("Generate a list of 3 popular and real products in the category: {category}")
+                .user(u -> u.text("Generate a list of 3 popular and real vehicle in the category: {category}")
                         .param("category", category))
                 .call()
-                .entity(new ParameterizedTypeReference<List<ProductInfo>>() {});
+                .entity(new ParameterizedTypeReference<List<CarDetails>>() {});
     }
 
     public StoreCatalog getStoreCatalog(String category) {

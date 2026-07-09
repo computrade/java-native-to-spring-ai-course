@@ -35,26 +35,26 @@ public class GeminiChatStructuredOutputController {
     }
 
 
-    @GetMapping("/car-details")
+    @GetMapping("/car/details")
     public ResponseEntity<CarDetails> getCarSpecification(String modelName) {
         CarDetails carDetails = chatStructuredOutputService.getCarSpecification(modelName);
         return ResponseEntity.ok(carDetails);
     }
 
-    @GetMapping("/catalog")
-    public ResponseEntity<List<ProductInfo>> getProductCatalog(String category) {
-        List<ProductInfo> ProductInfos = chatStructuredOutputService.getProductCatalog(category);
-        return ResponseEntity.ok(ProductInfos);
+    @GetMapping("/car/catalog")
+    public ResponseEntity<List<CarDetails>> getCarCatalog(String category) {
+        List<CarDetails> carDetailsList = chatStructuredOutputService.getCarCatalog(category);
+        return ResponseEntity.ok(carDetailsList);
     }
 
-    @GetMapping("/store/catalog")
+    @GetMapping("/store/catalog/validation")
     public ResponseEntity<StoreCatalog> getStoreCatalog(String category) {
         StoreCatalog storeCatalog = chatStructuredOutputService.getStoreCatalog(category);
         return ResponseEntity.ok(storeCatalog);
     }
 
 
-    @GetMapping("/store/catalog/customValidation")
+    @GetMapping("/store/catalog/validation/custom")
     public ResponseEntity<StoreCatalog> getStoreCatalogWithCustomValidation(String category) {
         StoreCatalog storeCatalog = chatStructuredOutputService.getStoreCatalogWithCustomValidation(category);
         return ResponseEntity.ok(storeCatalog);

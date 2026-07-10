@@ -68,8 +68,8 @@ public class ChatStructuredOutputService {
     public StoreCatalog getStoreCatalog(String category) {
 
         StructuredOutputValidationAdvisor validationAdvisor = StructuredOutputValidationAdvisor.builder()
-                .outputType(StoreCatalog.class) // התשתית תריץ אוטומטית את JsonSchemaGenerator.generateForType()
-                .maxRepeatAttempts(3)          // מספר הניסיונות החוזרים לתיקון מול ה-LLM במקרה של כישלון
+                .outputType(StoreCatalog.class) // Output Type for validation
+                .maxRepeatAttempts(3)         // Max Fix Attempts in case of validation failure
                 .build();
 
         return defaultChatClient.prompt()

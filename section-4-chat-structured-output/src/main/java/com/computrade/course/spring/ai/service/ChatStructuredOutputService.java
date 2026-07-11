@@ -83,17 +83,23 @@ public class ChatStructuredOutputService {
 
     public StoreCatalog getStoreCatalogWithCustomValidation(String category) {
 
+
+        StructuredOutputValidationAdvisor schemaValidationAdvisor = StructuredOutputValidationAdvisor.builder()
+                .outputType(StoreCatalog.class) // Output Type for validation
+                .maxRepeatAttempts(3)         // Max Fix Attempts in case of validation failure
+                .build();
+
         JavaBeanValidationAdvisor customAdvisor = new JavaBeanValidationAdvisor(
                 StoreCatalog.class,// Output Type for validation
                 3,  // Max Fix Attempts in case of validation failure
-                20   // Advisor Order (lower number means higher priority)
+                schemaValidationAdvisor.getOrder() + 1   // Advisor Order (Run after the schemaValidationAdvisor, lower number means higher priority)
         );
 
         return defaultChatClient.prompt()
                 .user(u -> u.text("Generate a realistic electronics store recommendations catalog for the category: {category}. " +
                                 "Provide a fitting store name and exactly 5 top featured products.")
                         .param("category", category))
-                .advisors(customAdvisor)
+                .advisors(schemaValidationAdvisor, customAdvisor)
                 .call()
                 .entity(StoreCatalog.class);
     }

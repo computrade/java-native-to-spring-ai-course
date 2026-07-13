@@ -1,9 +1,12 @@
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: DEBUG
+
 spring:
   application:
     name: section-2-chat-ollama
-ai:
-  ollama:
-    base-url: http://localhost:11434
-    chat:
-      options:
-        model: llama3
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        model: llama3.2

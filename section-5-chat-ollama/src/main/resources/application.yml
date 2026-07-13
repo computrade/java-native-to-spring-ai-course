@@ -4,7 +4,7 @@ logging:
 
 spring:
   application:
-    name: section-2-chat-ollama
+    name: section-5-chat-ollama
   ai:
     ollama:
       base-url: http://localhost:11434

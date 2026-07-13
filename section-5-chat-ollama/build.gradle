@@ -2,4 +2,5 @@ description = 'section-5-chat-ollama'
 
 dependencies {
     implementation 'org.springframework.ai:spring-ai-starter-model-ollama'
+    //implementation 'org.springframework.ai:spring-ai-starter-model-openai'
 }

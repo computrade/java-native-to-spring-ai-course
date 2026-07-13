@@ -10,3 +10,9 @@ spring:
       base-url: http://localhost:11434
       chat:
         model: llama3.2
+#     openai:
+#       base-url: http://localhost:12434/v1
+#       api-key: dummy-key-for-local-docker
+#       chat:
+#         model: ai/gemma3
+

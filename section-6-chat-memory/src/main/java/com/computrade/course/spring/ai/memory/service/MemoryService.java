@@ -2,7 +2,6 @@ package com.computrade.course.spring.ai.memory.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +22,11 @@ public class MemoryService {
             return response;
     }
 
-    public String chat(String userId, String prompt) {
+    public String chat(String convId, String prompt) {
 
         String response = chatClient.prompt().user(prompt)
                 // Conversation id must be set to something.
-                .advisors(advisorSpec -> advisorSpec.param(ChatMemory.CONVERSATION_ID, userId))
+                .advisors(advisorSpec -> advisorSpec.param(ChatMemory.CONVERSATION_ID, convId))
                 .call()
                 .content();
 

@@ -10,10 +10,15 @@ spring:
     username: demouser
     password: demopassword
     driver-class-name: org.postgresql.Driver
-  sql:
-    init:
-      mode: always  # create the table "spring_ai_chat_memory" on startup
+#  sql:
+#    init:
+#      mode: always  # create the table "spring_ai_chat_memory" on startup
   ai:
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: always
     google:
       genai:
         api-key: ${GEMINI_API_KEY}

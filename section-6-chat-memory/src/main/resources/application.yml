@@ -1,0 +1,21 @@
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: DEBUG
+
+spring:
+  application:
+    name: section-6-chat-memory
+  datasource:
+    url: jdbc:postgresql://localhost:5432/springai_db
+    username: demouser
+    password: demopassword
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      mode: always
+  ai:
+    google:
+      genai:
+        api-key: ${GEMINI_API_KEY}
+        chat:
+          model: gemini-3.5-flash

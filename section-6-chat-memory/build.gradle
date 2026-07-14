@@ -1,0 +1,8 @@
+description = 'section-6-chat-memory'
+
+dependencies {
+
+    implementation 'org.springframework.ai:spring-ai-starter-model-google-genai'
+    implementation 'org.springframework.ai:spring-ai-starter-model-chat-memory-repository-jdbc'
+
+}

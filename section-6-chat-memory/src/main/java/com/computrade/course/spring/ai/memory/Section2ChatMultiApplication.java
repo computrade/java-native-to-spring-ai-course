@@ -1,4 +1,4 @@
-package com.computrade.course.spring.ai;
+package com.computrade.course.spring.ai.memory;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

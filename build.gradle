@@ -32,6 +32,8 @@ subprojects {
         implementation platform("org.springframework.ai:spring-ai-bom:${springAiVersion}")
         implementation 'org.springframework.boot:spring-boot-starter-webmvc'
         implementation 'org.springframework.boot:spring-boot-starter-validation'
+        implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+        implementation 'org.springframework.ai:spring-ai-pgvector-store'
         implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5'
         compileOnly 'org.projectlombok:lombok'
         developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -40,6 +42,9 @@ subprojects {
         testCompileOnly 'org.projectlombok:lombok'
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
         testAnnotationProcessor 'org.projectlombok:lombok'
+
+        // 3. הדרייבר להתחברות ל-Postgres
+        runtimeOnly 'org.postgresql:postgresql'// Gemini
     }
 
     tasks.named('test') {

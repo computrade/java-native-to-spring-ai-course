@@ -34,7 +34,7 @@ public class ChatMemoryChatClientConfig {
 //    public ChatMemory chatMemory(ChatMemoryRepository chatMemoryRepository) {
 //        return MessageWindowChatMemory.builder()
 //                .chatMemoryRepository(chatMemoryRepository)
-//                //.maxMessages(4)
+//                .maxMessages(3)
 //                .build();
 //    }
 

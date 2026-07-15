@@ -27,7 +27,7 @@ public class MemoryController {
 
         String sessionId = session.getId();
 
-        // העברת ה-userId ל-Service כדי שישמש כ-conversationId ב-Advisor
+        // Keep Data for user Session, so that the conversation is remembered for the same user session
         String chatResponse = memoryService.chat(sessionId, prompt);
         return ResponseEntity.ok(chatResponse);
     }
@@ -37,7 +37,7 @@ public class MemoryController {
             @PathVariable String userId,
             @RequestParam String prompt) {
 
-        // העברת ה-userId ל-Service כדי שישמש כ-conversationId ב-Advisor
+        // Keep data for userId, so that the conversation is remembered for the same userId
         String chatResponse = memoryService.chat(userId, prompt);
         return ResponseEntity.ok(chatResponse);
     }

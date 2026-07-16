@@ -46,7 +46,7 @@ public class ChatMemoryChatClientConfig {
         Advisor messageChatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
 
         return builder
-                .defaultAdvisors(List.of(loggerAdvisor, messageChatMemoryAdvisor))
+               .defaultAdvisors(List.of(loggerAdvisor, messageChatMemoryAdvisor))
                 .build();
     }
 }

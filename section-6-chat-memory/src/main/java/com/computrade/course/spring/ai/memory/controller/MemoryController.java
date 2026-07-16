@@ -21,6 +21,15 @@ public class MemoryController {
         return ResponseEntity.ok(chatResponse);
     }
 
+    @GetMapping("/chat/{userId}")
+    public ResponseEntity<String> chat(
+            @PathVariable String userId,
+            @RequestParam String prompt) {
+
+        // Keep data for userId, so that the conversation is remembered for the same userId
+        String chatResponse = memoryService.chat(userId, prompt);
+        return ResponseEntity.ok(chatResponse);
+    }
 
     @GetMapping("/chat/session")
     public ResponseEntity<String> chat(@RequestParam String prompt, HttpSession session) {
@@ -29,16 +38,6 @@ public class MemoryController {
 
         // Keep Data for user Session, so that the conversation is remembered for the same user session
         String chatResponse = memoryService.chat(sessionId, prompt);
-        return ResponseEntity.ok(chatResponse);
-    }
-
-    @GetMapping("/chat/{userId}")
-    public ResponseEntity<String> chat(
-            @PathVariable String userId,
-            @RequestParam String prompt) {
-
-        // Keep data for userId, so that the conversation is remembered for the same userId
-        String chatResponse = memoryService.chat(userId, prompt);
         return ResponseEntity.ok(chatResponse);
     }
 

@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Section2ChatOllamaApplication {
+public class Section5ChatOllamaApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Section2ChatOllamaApplication.class, args);
+        SpringApplication.run(Section5ChatOllamaApplication.class, args);
     }
 
 }

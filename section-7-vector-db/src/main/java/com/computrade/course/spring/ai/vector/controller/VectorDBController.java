@@ -17,14 +17,18 @@ import java.util.Map;
 public class VectorDBController {
 
     private final VectorDBService vectorDBService;
-
-
+    
     @GetMapping("/embedding")
     public ResponseEntity<Map<String,EmbeddingResponse>> embed(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
         Map<String,EmbeddingResponse> embeddingResponse = vectorDBService.embed(message);
         return ResponseEntity.ok(embeddingResponse);
     }
 
+    @GetMapping("/ingest")
+    public ResponseEntity<String> ingestData() {
+        vectorDBService.ingestCoursesToVectorStore();
+        return ResponseEntity.ok("Data sent to Vector Store successfully!");
+    }
 
     @GetMapping("/chat/{userId}")
     public ResponseEntity<String> chat(
@@ -35,6 +39,5 @@ public class VectorDBController {
         String chatResponse = vectorDBService.chat(userId, prompt);
         return ResponseEntity.ok(chatResponse);
     }
-
 
 }

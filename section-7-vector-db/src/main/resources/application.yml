@@ -23,8 +23,9 @@ spring:
           model: gemini-3.5-flash
         embedding:
           api-key: ${GEMINI_API_KEY}
-          model: text-embedding-004
-
+          text:
+            model: gemini-embedding-2
+            dimensions: 1536  #align to the vector_store dimensions.
     vectorstore:
       pgvector:
         index-type: HNSW  #Default is HNSW, can also be FLAT

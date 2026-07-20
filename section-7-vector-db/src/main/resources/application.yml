@@ -1,0 +1,35 @@
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: DEBUG
+
+spring:
+  application:
+    name: section-7-vector-db
+  datasource:
+    url: jdbc:postgresql://localhost:5432/springai_db
+    username: demouser
+    password: demopassword
+    driver-class-name: org.postgresql.Driver
+  ai:
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: always
+    google:
+      genai:
+        api-key: ${GEMINI_API_KEY}
+        chat:
+          model: gemini-3.5-flash
+        embedding:
+          api-key: ${GEMINI_API_KEY}
+          model: text-embedding-004
+
+    vectorstore:
+      pgvector:
+        index-type: HNSW  #Default is HNSW, can also be FLAT
+        distance-type: COSINE_DISTANCE #Default is COSINE_DISTANCE, can also be EUCLIDEAN_DISTANCE or INNER_PRODUCT
+        table-name: vector_store
+        initialize-schema: true
+        schema-name: public
+        dimensions: 1536

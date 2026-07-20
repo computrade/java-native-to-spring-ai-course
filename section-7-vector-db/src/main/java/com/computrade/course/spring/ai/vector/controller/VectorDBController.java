@@ -40,4 +40,9 @@ public class VectorDBController {
         return ResponseEntity.ok(chatResponse);
     }
 
+    @GetMapping("/chat-rag/{userId}")
+    public ResponseEntity<String> chatRag(  @PathVariable String userId, @RequestParam String prompt) {
+        String chatResponse = vectorDBService.chatRag(userId, prompt);
+        return ResponseEntity.ok(chatResponse);
+    }
 }

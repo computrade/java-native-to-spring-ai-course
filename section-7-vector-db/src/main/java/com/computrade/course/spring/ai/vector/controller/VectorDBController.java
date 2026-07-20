@@ -1,5 +1,6 @@
 package com.computrade.course.spring.ai.vector.controller;
 
+import com.computrade.course.spring.ai.vector.service.VectorDBRouterService;
 import com.computrade.course.spring.ai.vector.service.VectorDBService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,7 +8,6 @@ import org.springframework.ai.embedding.EmbeddingResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -17,6 +17,7 @@ import java.util.Map;
 public class VectorDBController {
 
     private final VectorDBService vectorDBService;
+    private final VectorDBRouterService vectorDBRouterService;
     
     @GetMapping("/embedding")
     public ResponseEntity<Map<String,EmbeddingResponse>> embed(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
@@ -24,7 +25,7 @@ public class VectorDBController {
         return ResponseEntity.ok(embeddingResponse);
     }
 
-    @GetMapping("/ingest")
+    @PostMapping("/ingest")
     public ResponseEntity<String> ingestData() {
         vectorDBService.ingestCoursesToVectorStore();
         return ResponseEntity.ok("Data sent to Vector Store successfully!");
@@ -44,5 +45,19 @@ public class VectorDBController {
     public ResponseEntity<String> chatRag(  @PathVariable String userId, @RequestParam String prompt) {
         String chatResponse = vectorDBService.chatRag(userId, prompt);
         return ResponseEntity.ok(chatResponse);
+    }
+
+
+    @PostMapping("/ingest/pdf")
+    public ResponseEntity<String> ingestPdf() {
+        String response = vectorDBService.ingestLongPdf();
+        return ResponseEntity.ok(response);
+    }
+
+
+    @GetMapping("/chat-rag/{userId}/route")
+    public ResponseEntity<String> vectorDBRouterService(@PathVariable String userId,  @RequestParam String prompt) {
+        String response = vectorDBRouterService.routeAndQuery(userId, prompt);
+        return ResponseEntity.ok(response);
     }
 }

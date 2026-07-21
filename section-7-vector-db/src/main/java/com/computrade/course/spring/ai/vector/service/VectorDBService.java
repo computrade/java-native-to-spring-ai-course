@@ -11,8 +11,6 @@ import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.embedding.EmbeddingResponse;
 import org.springframework.ai.reader.tika.TikaDocumentReader;
-import org.springframework.ai.transformer.splitter.TextSplitter;
-import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.Filter;
@@ -41,18 +39,16 @@ public class VectorDBService {
     @Value("classpath:systemPromptForCourse.st")
     private Resource courseSystemPrompt;
 
-    @Value("classpath:courses_dataset.csv")
+    @Value("classpath:data/courses_dataset.csv")
     private Resource csvResource;
 
-    @Value("classpath:spring_ai_course_syllabus.pdf")
+    @Value("classpath:data/spring_ai_course_syllabus.pdf")
     private Resource pdfResource;
-    
 
     public Map<String,EmbeddingResponse> embed(String prompt) {
         EmbeddingResponse embeddingResponse = this.embeddingModel.embedForResponse(List.of(prompt));
         return Map.of("embedding", embeddingResponse);
     }
-
 
     public void ingestCoursesToVectorStore() {
         List<Document> documents = new ArrayList<>();
@@ -99,7 +95,6 @@ public class VectorDBService {
         }
     }
 
-
     public String chat(String convId, String prompt) {
 
         String response = chatClient.prompt().user(prompt)
@@ -116,7 +111,6 @@ public class VectorDBService {
         SearchRequest searchRequest = SearchRequest.builder().query(prompt).topK(3).similarityThreshold(0.7).build();
         return getChatResponse(convId, prompt, searchRequest);
     }
-
 
     public String ingestLongPdf() {
         try {

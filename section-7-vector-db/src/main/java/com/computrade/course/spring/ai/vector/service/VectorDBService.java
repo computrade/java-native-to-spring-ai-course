@@ -46,7 +46,7 @@ public class VectorDBService {
     private Resource pdfResource;
 
     public Map<String,EmbeddingResponse> embed(String prompt) {
-        EmbeddingResponse embeddingResponse = this.embeddingModel.embedForResponse(List.of(prompt));
+        EmbeddingResponse embeddingResponse = embeddingModel.embedForResponse(List.of(prompt));
         return Map.of("embedding", embeddingResponse);
     }
 

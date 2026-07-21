@@ -13,7 +13,7 @@ public class VectorDBRouterService {
 
     public VectorDBRouterService(ChatClient.Builder chatClientBuilder, VectorDBService vectorDBService) {
         this.vectorDBService = vectorDBService;
-        // נשתמש ב-System Prompt כדי להגדיר לבוט את תפקיד הנתב
+        // We use local system prompt to defind the Router job.
         this.chatClient = chatClientBuilder
                 .defaultSystem("""
                     You are a routing assistant. Analyze the user's question and classify it into exactly one of these categories:

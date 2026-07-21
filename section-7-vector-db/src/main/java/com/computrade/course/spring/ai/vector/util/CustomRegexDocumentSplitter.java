@@ -17,11 +17,11 @@ public class CustomRegexDocumentSplitter extends TextSplitter {
     @Override
     protected @NonNull List<String> splitText(String text) {
         List<String> chunks = new ArrayList<>();
-        // פיצול הטקסט הגולמי לפי ה-Regex (האינדקסים של המודולים)
+        // Split be regex.
         String[] splitContent = text.split(regex);
 
         for (String chunk : splitContent) {
-            if (!chunk.strip().isEmpty()) {
+            if (!chunk.isBlank()) {
                 chunks.add(chunk.strip());
             }
         }

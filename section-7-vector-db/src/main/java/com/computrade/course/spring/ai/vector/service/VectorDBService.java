@@ -11,11 +11,12 @@ import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.embedding.EmbeddingResponse;
 import org.springframework.ai.reader.tika.TikaDocumentReader;
+import org.springframework.ai.transformer.splitter.TextSplitter;
+import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.Filter;
 import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
-import org.springframework.ai.vectorstore.pgvector.PgVectorStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -37,11 +38,11 @@ public class VectorDBService {
     private final EmbeddingModel embeddingModel;
     private final VectorStore vectorStore;
 
-    @Value("classpath:courses_dataset.csv")
-    private Resource csvResource;
-
     @Value("classpath:systemPromptForCourse.st")
     private Resource courseSystemPrompt;
+
+    @Value("classpath:courses_dataset.csv")
+    private Resource csvResource;
 
     @Value("classpath:spring_ai_course_syllabus.pdf")
     private Resource pdfResource;
@@ -70,11 +71,11 @@ public class VectorDBService {
                 String noOfStudents = values.get("No of Students");
                 String totalHours = values.get("Total Course Hours");
 
-                // יצירת תוכן ה-טקסט עבור ה-Embedding
+                // Create content for the embedding
                 String content = String.format("Course: %s. Category: %s. Description: %s",
                         courseName, category, description);
 
-                // בניית המטא-דאטה עבור ה-Vector DB
+                // Create metadata for the Vector DB.
                 Map<String, Object> metadata = new HashMap<>();
                 metadata.put(SOURCE_KEY_WORD, Objects.requireNonNull(csvResource.getFilename()));
                 metadata.put("course_id", id);
@@ -83,12 +84,11 @@ public class VectorDBService {
                 metadata.put("students", Integer.parseInt(noOfStudents));
                 metadata.put("hours", Double.parseDouble(totalHours));
 
-                // יצירת אובייקט ה-Document של Spring AI
                 Document document = new Document(content, metadata);
                 documents.add(document);
             }
 
-            // דחיפת כל ה-Documents ל-Vector Store בבת אחת
+            // Push all documents to the Vector Store.
             if (!documents.isEmpty()) {
                 vectorStore.accept(documents);
                 log.info("Successfully ingested {} courses using OpenCSV.", documents.size());
@@ -99,19 +99,6 @@ public class VectorDBService {
         }
     }
 
-
-
-
-    public String chat(String prompt) {
-
-            String response = chatClient.prompt().user(prompt)
-                    // Conversation id must be set to something.
-                    .advisors(advisorSpec -> advisorSpec.param(ChatMemory.CONVERSATION_ID,"default"))
-                    .call()
-                    .content();
-
-            return response;
-    }
 
     public String chat(String convId, String prompt) {
 
@@ -127,7 +114,6 @@ public class VectorDBService {
     public String chatRag(String convId, String prompt) {
 
         SearchRequest searchRequest = SearchRequest.builder().query(prompt).topK(3).similarityThreshold(0.7).build();
-
         return getChatResponse(convId, prompt, searchRequest);
     }
 
@@ -139,28 +125,29 @@ public class VectorDBService {
             List<Document> rawDocuments = pdfReader.get();
 
             log.info("Successfully read {} raw pages/paragraphs from PDF.", rawDocuments.size());
+            //TokenTextSplitter splitter = TokenTextSplitter.builder().build(); // split into chunks.
+
+            // Split into chunks with prior doc knowledge
             CustomRegexDocumentSplitter splitter = new CustomRegexDocumentSplitter("(?=Module \\d+:)");
 
             List<Document> splitDocuments = splitter.split(rawDocuments);
             log.info("Split into {} smaller semantic chunks.", splitDocuments.size());
 
-            // 4. העלאה ל-Vector Store ב-Batches (מניעת עומס על ה-Network וה-DB)
+            // upload to Vectore Store with smaller Batches to avoid Netword and DB overload.
             int batchSize = 100;
             List<Document> batch = new ArrayList<>();
 
             for (int i = 0; i < splitDocuments.size(); i++) {
                 Document doc = splitDocuments.get(i);
-
-                // הוספת מטא-דאטה שימושי כדי לדעת מאיזה מקור הגיע ה-Chunk
+                // Add useful metadata - to know what is the source of the Chunk
                 doc.getMetadata().put(SOURCE_KEY_WORD, Objects.requireNonNull(pdfResource.getFilename()));
                 doc.getMetadata().put("chunk_index", i);
-
                 batch.add(doc);
 
-                // ברגע שהגענו לגודל ה-Batch או לסוף הרשימה - דוחפים ל-DB
+                // When we get to the Batch size or end of list - push to the DB
                 if (batch.size() == batchSize || i == splitDocuments.size() - 1) {
-                    vectorStore.accept(batch);
                     log.info("Ingested batch of {} chunks into the Vector Store...", batch.size());
+                    vectorStore.accept(batch);
                     batch.clear(); // ריקון ה-Batch לקראת הסיבוב הבא
                 }
             }
@@ -174,18 +161,17 @@ public class VectorDBService {
 
     // Filtered Semantic Search
     public String queryMyCourse(String convId, String prompt) {
-        // 1. שימוש ב-Builder הייעודי של Spring AI לבניית ביטויי סינון
+        // Use Spring AI FilterExpressionBuilder to build filter expression
         FilterExpressionBuilder filterBuilder = new FilterExpressionBuilder();
-
-        // 2. הגדרת תנאי סינון: השדה 'source' במטא-דאטה חייב להיות שווה בדיוק לשם קובץ הסילבוס
+        // For this method - the source must be equal to the pdfSource file name
         Filter.Expression filterExpression = filterBuilder
                 .eq(SOURCE_KEY_WORD, Objects.requireNonNull(pdfResource.getFilename()))
                 .build();
 
         SearchRequest searchRequest = SearchRequest.builder()
                 .query(prompt)
-                .topK(3) // מספר ה-Chunks הכי רלוונטיים שנרצה לשלוף
-                .filterExpression(filterExpression) // כאן קורה הקסם של הסינון
+                .topK(3) // 3 most relevant.
+                .filterExpression(filterExpression) // Filter magic happens here.
                 .build();
 
 

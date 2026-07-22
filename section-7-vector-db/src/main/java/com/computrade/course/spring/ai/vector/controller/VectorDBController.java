@@ -1,5 +1,6 @@
 package com.computrade.course.spring.ai.vector.controller;
 
+import com.computrade.course.spring.ai.vector.service.PdfVectorDBService;
 import com.computrade.course.spring.ai.vector.service.VectorDBRouterService;
 import com.computrade.course.spring.ai.vector.service.VectorDBService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class VectorDBController {
 
     private final VectorDBService vectorDBService;
     private final VectorDBRouterService vectorDBRouterService;
+    private final PdfVectorDBService pdfVectorDBService;
     
     @GetMapping("/embedding")
     public ResponseEntity<Map<String,EmbeddingResponse>> embed(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
@@ -46,6 +48,19 @@ public class VectorDBController {
         String chatResponse = vectorDBService.chatRag(userId, prompt);
         return ResponseEntity.ok(chatResponse);
     }
+
+    @PostMapping("/ingest/pdfVector")
+    public ResponseEntity<String> ingestPdfVector() {
+        String response = pdfVectorDBService.ingestLongPdf();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/chat-rag/{userId}/pdf")
+    public ResponseEntity<String> chatPdfRag(  @PathVariable String userId, @RequestParam String prompt) {
+        String chatResponse = pdfVectorDBService.chatPdfRag(userId, prompt);
+        return ResponseEntity.ok(chatResponse);
+    }
+
 
 
     @PostMapping("/ingest/pdf")

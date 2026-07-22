@@ -134,7 +134,7 @@ public class VectorDBService {
                 doc.getMetadata().put("chunk_index", i);
             }
 
-            // upload to Vectore Store with smaller Batches to avoid Netword and DB overload.
+            // upload to Vector Store with smaller Batches to avoid Netword and DB overload.
             int batchSize = 100;
             List<Document> batch = new ArrayList<>();
             for (int i = 0; i < splitDocuments.size(); i++) {

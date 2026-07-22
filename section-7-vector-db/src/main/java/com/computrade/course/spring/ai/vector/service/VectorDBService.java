@@ -119,7 +119,7 @@ public class VectorDBService {
             List<Document> rawDocuments = pdfReader.get();
 
             log.info("Successfully read {} raw pages/paragraphs from PDF.", rawDocuments.size());
-            //TokenTextSplitter splitter = TokenTextSplitter.builder().build(); // split into chunks.
+            //TokenTextSplitter splitter = TokenTextSplitter.builder().withChunkSize(100).build(); // split into chunks.
 
             // Split into chunks with prior doc knowledge
             CustomRegexDocumentSplitter splitter = new CustomRegexDocumentSplitter("(?=Module \\d+:)");
@@ -127,22 +127,24 @@ public class VectorDBService {
             List<Document> splitDocuments = splitter.split(rawDocuments);
             log.info("Split into {} smaller semantic chunks.", splitDocuments.size());
 
+            // Add useful metadata - to know what is the source of the Chunk
+            for (int i = 0; i < splitDocuments.size(); i++) {
+                Document doc = splitDocuments.get(i);
+                doc.getMetadata().put(SOURCE_KEY_WORD, Objects.requireNonNull(pdfResource.getFilename()));
+                doc.getMetadata().put("chunk_index", i);
+            }
+
             // upload to Vectore Store with smaller Batches to avoid Netword and DB overload.
             int batchSize = 100;
             List<Document> batch = new ArrayList<>();
-
             for (int i = 0; i < splitDocuments.size(); i++) {
                 Document doc = splitDocuments.get(i);
-                // Add useful metadata - to know what is the source of the Chunk
-                doc.getMetadata().put(SOURCE_KEY_WORD, Objects.requireNonNull(pdfResource.getFilename()));
-                doc.getMetadata().put("chunk_index", i);
                 batch.add(doc);
-
                 // When we get to the Batch size or end of list - push to the DB
                 if (batch.size() == batchSize || i == splitDocuments.size() - 1) {
                     log.info("Ingested batch of {} chunks into the Vector Store...", batch.size());
                     vectorStore.accept(batch);
-                    batch.clear(); // ריקון ה-Batch לקראת הסיבוב הבא
+                    batch.clear(); // clear the Batch for the next iteration
                 }
             }
 

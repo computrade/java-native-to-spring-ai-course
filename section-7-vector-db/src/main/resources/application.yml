@@ -34,3 +34,4 @@ spring:
         initialize-schema: true
         schema-name: public
         dimensions: 1536
+        # max-document-batch-size: 100

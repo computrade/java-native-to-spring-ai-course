@@ -10,9 +10,11 @@ public class VectorDBRouterService {
 
     private final ChatClient chatClient;
     private final VectorDBService vectorDBService;
+    private final PdfVectorDBService pdfVectorDBService;
 
-    public VectorDBRouterService(ChatClient.Builder chatClientBuilder, VectorDBService vectorDBService) {
+    public VectorDBRouterService(ChatClient.Builder chatClientBuilder, VectorDBService vectorDBService, PdfVectorDBService pdfVectorDBService) {
         this.vectorDBService = vectorDBService;
+        this.pdfVectorDBService = pdfVectorDBService;
         // We use local system prompt to defind the Router job.
         this.chatClient = chatClientBuilder
                 .defaultSystem("""
@@ -37,6 +39,23 @@ public class VectorDBRouterService {
         // Route the quest to the correct service with hybrid search
         if ("MY_COURSE".equals(classification)) {
             return vectorDBService.queryMyCourse(covId,userQuestion);
+        } else {
+            return vectorDBService.queryAllCourse(covId,userQuestion);
+        }
+    }
+
+    public String routeAndQueryByTable(String covId, String userQuestion) {
+        // LLM Decide what the user meant to ask
+        String classification = this.chatClient.prompt()
+                .user(userQuestion)
+                .call()
+                .content();
+
+        log.info("User intent classified as: {}", classification);
+
+        // Route the quest to the correct service with hybrid search
+        if ("MY_COURSE".equals(classification)) {
+            return pdfVectorDBService.queryPdfVectorStore(covId,userQuestion);
         } else {
             return vectorDBService.queryAllCourse(covId,userQuestion);
         }

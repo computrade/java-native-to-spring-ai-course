@@ -49,7 +49,7 @@ public class VectorDBController {
         return ResponseEntity.ok(chatResponse);
     }
 
-    @PostMapping("/ingest/pdfVector")
+    @PostMapping("/ingest/pdfVectorStore")
     public ResponseEntity<String> ingestPdfVector() {
         String response = pdfVectorDBService.ingestLongPdf();
         return ResponseEntity.ok(response);
@@ -57,7 +57,7 @@ public class VectorDBController {
 
     @GetMapping("/chat-rag/{userId}/pdf")
     public ResponseEntity<String> chatPdfRag(  @PathVariable String userId, @RequestParam String prompt) {
-        String chatResponse = pdfVectorDBService.chatPdfRag(userId, prompt);
+        String chatResponse = pdfVectorDBService.queryPdfVectorStore(userId, prompt);
         return ResponseEntity.ok(chatResponse);
     }
 

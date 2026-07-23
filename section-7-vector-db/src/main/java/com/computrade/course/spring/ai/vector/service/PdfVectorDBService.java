@@ -35,7 +35,7 @@ public class PdfVectorDBService {
     @Value("classpath:data/spring_ai_course_syllabus.pdf")
     private Resource pdfResource;
 
-    public String chatPdfRag(String convId, String prompt) {
+    public String queryPdfVectorStore(String convId, String prompt) {
 
         SearchRequest searchRequest = SearchRequest.builder().query(prompt).topK(3).similarityThreshold(0.7).build();
         return getChatResponse(convId, prompt, searchRequest);

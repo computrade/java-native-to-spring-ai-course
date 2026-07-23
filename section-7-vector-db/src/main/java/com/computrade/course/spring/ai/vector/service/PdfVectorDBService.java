@@ -48,8 +48,6 @@ public class PdfVectorDBService {
             List<Document> rawDocuments = pdfReader.get();
 
             log.info("Successfully read {} raw pages/paragraphs from PDF.", rawDocuments.size());
-            //TokenTextSplitter splitter = TokenTextSplitter.builder().withChunkSize(100).build(); // split into chunks.
-
             // Split into chunks with prior doc knowledge
             CustomRegexDocumentSplitter splitter = new CustomRegexDocumentSplitter("(?=Module \\d+:)");
 

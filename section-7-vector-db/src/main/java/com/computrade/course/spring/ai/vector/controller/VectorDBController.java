@@ -49,17 +49,8 @@ public class VectorDBController {
         return ResponseEntity.ok(chatResponse);
     }
 
-    @PostMapping("/ingest/pdfVectorStore")
-    public ResponseEntity<String> ingestPdfVector() {
-        String response = pdfVectorDBService.ingestLongPdf();
-        return ResponseEntity.ok(response);
-    }
 
-    @GetMapping("/chat-rag/{userId}/pdf")
-    public ResponseEntity<String> chatPdfRag(  @PathVariable String userId, @RequestParam String prompt) {
-        String chatResponse = pdfVectorDBService.queryPdfVectorStore(userId, prompt);
-        return ResponseEntity.ok(chatResponse);
-    }
+
 
 
 
@@ -75,4 +66,23 @@ public class VectorDBController {
         String response = vectorDBRouterService.routeAndQuery(userId, prompt);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/ingest/pdfVectorStore")
+    public ResponseEntity<String> ingestPdfVector() {
+        String response = pdfVectorDBService.ingestLongPdf();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/chat-rag/{userId}/pdf")
+    public ResponseEntity<String> chatPdfRag(@PathVariable String userId, @RequestParam String prompt) {
+        String chatResponse = pdfVectorDBService.queryPdfVectorStore(userId, prompt);
+        return ResponseEntity.ok(chatResponse);
+    }
+
+    @GetMapping("/chat-rag/{userId}/route/tables")
+    public ResponseEntity<String> vectorDBRouterByTablesService(@PathVariable String userId,  @RequestParam String prompt) {
+        String response = vectorDBRouterService.routeAndQueryByTable(userId, prompt);
+        return ResponseEntity.ok(response);
+    }
+
 }

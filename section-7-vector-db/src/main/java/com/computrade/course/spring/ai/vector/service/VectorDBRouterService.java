@@ -18,7 +18,7 @@ public class VectorDBRouterService {
                 .defaultSystem("""
                     You are a routing assistant. Analyze the user's question and classify it into exactly one of these categories:
                     - MY_COURSE: If the question is specifically about the Spring AI course syllabus, modules, or what is covered in this specific class.
-                    - GENERAL: If the question is about Udemy courses in general, other topics, or general recommendations.
+                    - GENERAL: If the question is about courses in general, other topics, or general recommendations.
                     
                     Respond with ONLY the category name (MY_COURSE or GENERAL). No other text.
                     """)

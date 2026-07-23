@@ -33,13 +33,14 @@ public class VectorDBConfig {
     @Bean
     public VectorStore pdfVectorStore(JdbcTemplate jdbcTemplate, EmbeddingModel embeddingModel) {
         return PgVectorStore.builder(jdbcTemplate,embeddingModel)
-                .indexType(PgVectorStore.PgIndexType.HNSW)
-                .distanceType(PgVectorStore.PgDistanceType.COSINE_DISTANCE)
                 .vectorTableName("pdf_vetore_store")
                 .initializeSchema(true)
-                .dimensions(1536)
-                .schemaName("public")
                 .maxDocumentBatchSize(100)
+                // all these are default values
+                //.indexType(PgVectorStore.PgIndexType.HNSW)
+                //.distanceType(PgVectorStore.PgDistanceType.COSINE_DISTANCE)
+                //.dimensions(1536) - taken from the embedding model
+                //.schemaName("public")
                 .build();
     }
 

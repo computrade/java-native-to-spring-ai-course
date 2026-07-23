@@ -35,7 +35,6 @@ public class VectorDBService {
     private final ChatClient chatClient;
     private final EmbeddingModel embeddingModel;
     private final VectorStore vectorStore;
-    private final VectorStore pdfVectorStore;
 
     @Value("classpath:systemPromptForCourse.st")
     private Resource courseSystemPrompt;

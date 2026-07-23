@@ -33,7 +33,7 @@ public class VectorDBConfig {
     @Bean
     public VectorStore pdfVectorStore(JdbcTemplate jdbcTemplate, EmbeddingModel embeddingModel) {
         return PgVectorStore.builder(jdbcTemplate,embeddingModel)
-                .vectorTableName("pdf_vetore_store")
+                .vectorTableName("pdf_vector_store")
                 .initializeSchema(true)
                 .maxDocumentBatchSize(100)
                 // all these are default values

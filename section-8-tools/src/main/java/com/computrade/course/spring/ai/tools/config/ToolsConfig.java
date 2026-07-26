@@ -24,5 +24,9 @@ public class ToolsConfig {
         return RestClient.builder();
     }
 
+    @Bean
+    public RestClient finnHubRestClient(RestClient.Builder builder) {
+        return builder.baseUrl("https://finnhub.io/api/v1").build();
+    }
 
 }

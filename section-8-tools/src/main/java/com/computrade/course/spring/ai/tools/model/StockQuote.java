@@ -23,7 +23,7 @@ public record StockQuote(
     public String getReadableTime() {
         if (this.timestamp == 0) return "N/A";
         return Instant.ofEpochSecond(this.timestamp)
-                .atZone(ZoneId.systemDefault())
+                .atZone(ZoneId.of("America/New_York"))
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }

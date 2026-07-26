@@ -62,6 +62,10 @@ subprojects {
         if (project.hasProperty('anthropicApiKey')) {
             environment 'ANTHROPIC_API_KEY', project.property('anthropicApiKey')
         }
+
+        if (project.hasProperty('finnhubApiKey')) {
+            environment 'FINNHUB_API_KEY', project.property('finnhubApiKey')
+        }
     }
 
 }

@@ -12,10 +12,7 @@ The project is organized into submodules, each representing a specific AI provid
 
 ### Submodules:
 - `section-2-chat-gemini`: Chat interactions using Google Gemini.
-- `section-2-chat-openai`: Chat interactions using OpenAI.
-- `section-2-chat-ollama`: Chat interactions using local models via Ollama.
-- `section-2-chat-cluade`: Chat interactions using Anthropic Claude.
-- `section-2-chat-multi`: Unified module supporting multiple AI profiles.
+
 
 ## Core Dependencies
 - **Spring AI BOM**: `org.springframework.ai:spring-ai-bom:2.0.0`

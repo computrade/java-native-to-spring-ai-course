@@ -2,7 +2,7 @@ package com.computrade.course.spring.ai.tools.controller;
 
 import com.computrade.course.spring.ai.tools.model.StockQuote;
 import com.computrade.course.spring.ai.tools.service.ChatService;
-import com.computrade.course.spring.ai.tools.service.StockMarketService;
+import com.computrade.course.spring.ai.tools.service.StockMarketToolService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -18,13 +18,13 @@ import tools.jackson.databind.ObjectMapper;
 @RequiredArgsConstructor
 public class ToolsController {
 
-    private final StockMarketService stockMarketService;
+    private final StockMarketToolService stockMarketToolService;
     private final ChatService chatService;
     private final ObjectMapper objectMapper;
 
     @GetMapping("/quote")
     public ResponseEntity<StockQuote> getMarketQuote(String symbol) {
-        return ResponseEntity.ok(stockMarketService.fetchStockPrice(symbol));
+        return ResponseEntity.ok(stockMarketToolService.fetchStockPrice(symbol));
     }
 
 

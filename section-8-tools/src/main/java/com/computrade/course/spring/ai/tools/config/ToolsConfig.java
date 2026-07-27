@@ -1,7 +1,7 @@
 package com.computrade.course.spring.ai.tools.config;
 
 
-import com.computrade.course.spring.ai.tools.service.StockMarketService;
+import com.computrade.course.spring.ai.tools.service.StockMarketToolService;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,7 @@ public class ToolsConfig {
 
 
     @Bean
-    public ChatClient defaultChatClient(ChatClient.Builder builder, StockMarketService stockMarketService) {
+    public ChatClient defaultChatClient(ChatClient.Builder builder, StockMarketToolService stockMarketToolService) {
         return builder
                 .defaultAdvisors(new SimpleLoggerAdvisor())
                 //.defaultTools(stockMarketService)

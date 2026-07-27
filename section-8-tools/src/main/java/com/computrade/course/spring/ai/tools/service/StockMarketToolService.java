@@ -17,7 +17,7 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-public class StockMarketService {
+public class StockMarketToolService {
 
     private final RestClient finnHubRestClient;
 

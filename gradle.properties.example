@@ -5,4 +5,4 @@
 geminiApiKey=<YOUR_GEMINI_API_KEY>
 openaiApiKey=<YOUR_OPENAI_API_KEY>
 anthropicApiKey=<YOUR_CLAUDE_API_KEY>
-
+finnhubApiKey=<YOUR_FINNHUB_API_KEY>

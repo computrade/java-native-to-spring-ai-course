@@ -15,7 +15,7 @@ public class ChatService {
     public String chatWithQuoteTool(String prompt) {
         return this.chatClient.prompt()
                 .user(prompt)
-                .tools(stockMarketToolService) // <-- Dynamic Per-Request Tool Scope!
+                //.tools(stockMarketToolService) // <-- Dynamic Per-Request Tool Scope!
                 .call()
                 .content();
     }

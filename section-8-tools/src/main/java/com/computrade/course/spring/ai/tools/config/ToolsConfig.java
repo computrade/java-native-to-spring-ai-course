@@ -1,12 +1,20 @@
 package com.computrade.course.spring.ai.tools.config;
 
 
+import com.computrade.course.spring.ai.tools.model.TaxRequest;
+import com.computrade.course.spring.ai.tools.service.LegacyTaxCalculator;
 import com.computrade.course.spring.ai.tools.service.StockMarketToolService;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.tool.ToolCallback;
+import org.springframework.ai.tool.method.MethodToolCallback;
+import org.springframework.ai.tool.support.ToolDefinitions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.client.RestClient;
+
+import java.lang.reflect.Method;
 
 
 @Configuration
@@ -14,10 +22,34 @@ public class ToolsConfig {
 
 
     @Bean
-    public ChatClient defaultChatClient(ChatClient.Builder builder, StockMarketToolService stockMarketToolService) {
+    public ChatClient defaultChatClient(ChatClient.Builder builder,
+                                        StockMarketToolService stockMarketToolService,
+                                        ToolCallback legacyTaxTool) {
+
         return builder
                 .defaultAdvisors(new SimpleLoggerAdvisor())
-                //.defaultTools(stockMarketService)
+                .defaultTools(stockMarketToolService, legacyTaxTool)
+                .build();
+    }
+
+    // Programmatically registering a legacy method using the exact Spring AI 2.0.0+ specification
+    @Bean
+    public ToolCallback legacyTaxTool(LegacyTaxCalculator legacyCalculator) {
+        // Safe programmatic lookup of the target legacy method using Spring's ReflectionUtils
+        Method method = ReflectionUtils.findMethod(LegacyTaxCalculator.class, "calculatePurchaseTax", TaxRequest.class);
+
+        if (method == null) {
+            throw new IllegalStateException("Failed to find target legacy method: calculatePurchaseTax");
+        }
+
+        // Building the modern ToolCallback with its descriptive metadata schema
+        return MethodToolCallback.builder()
+                .toolDefinition(ToolDefinitions.builder(method)
+                        .name("calculateStockTax") // Custom overriding name for the LLM
+                        .description("Calculates the regional purchase tax rate for a specific stock ticker based on the country code.")
+                        .build())
+                .toolMethod(method)            // Pass the method object here
+                .toolObject(legacyCalculator) // Pass the object instance here
                 .build();
     }
 

@@ -22,7 +22,7 @@ public class FinnHubStockMarketService {
     String apiKey;
 
 
-    protected StockQuote getSymbolQuote(String symbol) {
+    public StockQuote getSymbolQuote(String symbol) {
         StockQuote response = Objects.requireNonNull(finnHubRestClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/quote")
@@ -39,7 +39,7 @@ public class FinnHubStockMarketService {
     }
 
 
-    protected @NonNull List<CompanyNews> getCompanyNews(String ticker, String fromDate, String toDate) {
+    public @NonNull List<CompanyNews> getCompanyNews(String ticker, String fromDate, String toDate) {
         // 2. Fetch the modern collection payload directly using ParameterizedTypeReference
         List<CompanyNews> newsList = finnHubRestClient.get()
                 .uri(uriBuilder -> uriBuilder

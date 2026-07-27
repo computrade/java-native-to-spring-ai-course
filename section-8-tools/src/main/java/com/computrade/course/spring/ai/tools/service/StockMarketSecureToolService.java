@@ -1,21 +1,12 @@
 package com.computrade.course.spring.ai.tools.service;
 
-import com.computrade.course.spring.ai.tools.model.CompanyNews;
 import com.computrade.course.spring.ai.tools.model.StockQuote;
 import com.computrade.course.spring.ai.tools.model.Tenant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.model.ToolContext;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +40,7 @@ public class StockMarketSecureToolService {
             }
         }
 
-        return finnHubStockMarketService.callFinnhubQuoteApi(symbol);
+        return finnHubStockMarketService.getSymbolQuote(symbol);
     }
 
 

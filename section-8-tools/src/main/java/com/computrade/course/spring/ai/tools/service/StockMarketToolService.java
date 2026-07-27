@@ -25,7 +25,7 @@ public class StockMarketToolService  {
     public StockQuote fetchStockPrice(
             @ToolParam(description = "The uppercase stock exchange ticker symbol, for example 'AAPL', 'GOOG', 'TSLA'.") String symbol
     ) {
-        return finnHubStockMarketService.callFinnhubQuoteApi(symbol);
+        return finnHubStockMarketService.getSymbolQuote(symbol);
     }
 
     @Tool(

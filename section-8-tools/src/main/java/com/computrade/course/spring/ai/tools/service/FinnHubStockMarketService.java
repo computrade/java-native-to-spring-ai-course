@@ -22,7 +22,7 @@ public class FinnHubStockMarketService {
     String apiKey;
 
 
-    protected StockQuote callFinnhubQuoteApi(String symbol) {
+    protected StockQuote getSymbolQuote(String symbol) {
         StockQuote response = Objects.requireNonNull(finnHubRestClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/quote")

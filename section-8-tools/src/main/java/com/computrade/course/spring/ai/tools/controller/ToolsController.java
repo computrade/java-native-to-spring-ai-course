@@ -1,6 +1,7 @@
 package com.computrade.course.spring.ai.tools.controller;
 
 import com.computrade.course.spring.ai.tools.model.StockQuote;
+import com.computrade.course.spring.ai.tools.model.Tenant;
 import com.computrade.course.spring.ai.tools.service.ChatService;
 import com.computrade.course.spring.ai.tools.service.StockMarketToolService;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +29,15 @@ public class ToolsController {
     }
 
 
-    @GetMapping("/chat/tool/")
+    @GetMapping("/chat/tool/quote")
     public ResponseEntity<String> chatWithQuoteTool(String prompt) {
         return ResponseEntity.ok(chatService.chatWithQuoteTool(prompt));
+
+    }
+
+    @GetMapping("/chat/tool/context/quote")
+    public ResponseEntity<String> chatWithQuoteToolContext(String prompt, Tenant tenant) {
+        return ResponseEntity.ok(chatService.chatWithQuoteToolCotext(prompt, tenant));
 
     }
 

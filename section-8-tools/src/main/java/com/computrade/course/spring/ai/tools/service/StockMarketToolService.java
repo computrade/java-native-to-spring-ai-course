@@ -5,24 +5,17 @@ import com.computrade.course.spring.ai.tools.model.StockQuote;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-public class StockMarketToolService {
+public class StockMarketToolService  {
 
-    private final RestClient finnHubRestClient;
-
-    @Value("${app.finnhub.api-key}")
-    String apiKey;
+    private final FinnHubStockMarketService finnHubStockMarketService;
 
 
     @Tool(
@@ -32,25 +25,7 @@ public class StockMarketToolService {
     public StockQuote fetchStockPrice(
             @ToolParam(description = "The uppercase stock exchange ticker symbol, for example 'AAPL', 'GOOG', 'TSLA'.") String symbol
     ) {
-        // Querying the free Finnhub /quote endpoint
-        StockQuote response = Objects.requireNonNull(finnHubRestClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/quote")
-                        .queryParam("symbol", symbol.toUpperCase())
-                        .queryParam("token", apiKey)
-                        .build())
-                .retrieve()
-                .body(StockQuote.class));
-
-
-        // Fail fast if the API returns an empty payload or missing data key
-        if (response.currentPrice() == 0) {
-            throw new RuntimeException("Finnhub failed to return valid data for symbol: " + symbol);
-        }
-
-        // 2. Leverage our immutable wither pattern to map the uppercase ticker and return the payload
-        return response.withTicker(symbol.toUpperCase());
-
+        return finnHubStockMarketService.callFinnhubQuoteApi(symbol);
     }
 
     @Tool(
@@ -69,26 +44,10 @@ public class StockMarketToolService {
         String toDate = today.format(formatter);
         String fromDate = thirtyDaysAgo.format(formatter);
 
-        // 2. Fetch the modern collection payload directly using ParameterizedTypeReference
-        List<CompanyNews> newsList = finnHubRestClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/company-news")
-                        .queryParam("symbol", ticker.toUpperCase())
-                        .queryParam("from", fromDate)
-                        .queryParam("to", toDate)
-                        .queryParam("token", apiKey)
-                        .build())
-                .retrieve()
-                .body(new ParameterizedTypeReference<List<CompanyNews>>() {
-                });
-
-        if (newsList == null || newsList.isEmpty()) {
-            throw new RuntimeException("No recent news found for ticker: " + ticker);
-        }
-
-        // 3. Return the limited stream of structural POJOs directly to the response pipeline
-        return newsList.stream().limit(5).toList();
+        return finnHubStockMarketService.getCompanyNews(ticker, fromDate, toDate);
     }
+
+
 }
 
 

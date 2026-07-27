@@ -28,7 +28,7 @@ public class ToolsConfig {
 
         return builder
                 .defaultAdvisors(new SimpleLoggerAdvisor())
-                .defaultTools(stockMarketToolService, legacyTaxTool)
+                //.defaultTools(stockMarketToolService, legacyTaxTool)
                 .build();
     }
 

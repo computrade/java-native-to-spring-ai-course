@@ -32,7 +32,7 @@ public class ToolsConfig {
                 .build();
     }
 
-    // Programmatically registering a legacy method using the exact Spring AI 2.0.0+ specification
+    // Programmatically registering a legacy method
     @Bean
     public ToolCallback legacyTaxTool(LegacyTaxCalculator legacyCalculator) {
         // Safe programmatic lookup of the target legacy method using Spring's ReflectionUtils
@@ -46,10 +46,10 @@ public class ToolsConfig {
         return MethodToolCallback.builder()
                 .toolDefinition(ToolDefinitions.builder(method)
                         .name("calculateStockTax") // Custom overriding name for the LLM
-                        .description("Calculates the regional purchase tax rate for a specific stock ticker based on the country code.")
+                        .description("Calculates the regional tax rate for a specific stock ticker based on the country code.")
                         .build())
-                .toolMethod(method)            // Pass the method object here
                 .toolObject(legacyCalculator) // Pass the object instance here
+                .toolMethod(method)            // Pass the method object here
                 .build();
     }
 

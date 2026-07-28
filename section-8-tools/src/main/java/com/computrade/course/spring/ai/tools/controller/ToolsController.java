@@ -4,15 +4,24 @@ import com.computrade.course.spring.ai.tools.model.StockQuote;
 import com.computrade.course.spring.ai.tools.model.Tenant;
 import com.computrade.course.spring.ai.tools.service.ChatService;
 import com.computrade.course.spring.ai.tools.service.FinnHubStockMarketService;
+import com.computrade.course.spring.ai.tools.service.StockMarketSecureToolService;
 import com.computrade.course.spring.ai.tools.service.StockMarketToolService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.tool.ToolCallback;
+import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -23,6 +32,7 @@ public class ToolsController {
     private final FinnHubStockMarketService finnHubStockMarketService;
     private final ChatService chatService;
     private final ObjectMapper objectMapper;
+    private final StockMarketToolService stockMarketToolService;
 
     @GetMapping("/quote")
     public ResponseEntity<StockQuote> getMarketQuote(String symbol) {
@@ -34,6 +44,29 @@ public class ToolsController {
     public ResponseEntity<String> chatWithQuoteTool(String prompt) {
         return ResponseEntity.ok(chatService.chatWithQuoteTool(prompt));
 
+    }
+
+
+    @GetMapping("/schema")
+    public ResponseEntity<List<Map<String, Object>>> getToolsSchema() {
+        // 1. Create a provider from our annotated Java bean
+        MethodToolCallbackProvider provider = MethodToolCallbackProvider.builder().toolObjects(stockMarketToolService).build();
+
+        // 2. Extract all tool callbacks generated via Reflection
+        List<ToolCallback> callbacks = Arrays.asList(provider.getToolCallbacks());
+
+        // 3. Map each tool to its underlying JSON Schema structure
+        List<Map<String, Object>> schemas = callbacks.stream()
+                .map(callback -> {
+                    JsonNode parsedSchema = objectMapper.readTree(callback.getToolDefinition().inputSchema());
+                    return Map.of(
+                            "toolName", callback.getToolDefinition().name(),
+                            "description", callback.getToolDefinition().description(),
+                            "jsonSchema", parsedSchema); // <-- This is the exact JSON Schema sent to the LLM
+                })
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(schemas);
     }
 
     @GetMapping("/chat/tool/context/quote")

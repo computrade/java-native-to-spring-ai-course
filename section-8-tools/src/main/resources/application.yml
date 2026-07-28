@@ -1,7 +1,7 @@
 logging:
   level:
     org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: DEBUG
-
+    org.springframework.web.client.RestClient: DEBUG
 app:
   finnhub:
     api-key: ${FINNHUB_API_KEY}

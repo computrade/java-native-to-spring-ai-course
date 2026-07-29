@@ -4,7 +4,6 @@ import com.computrade.course.spring.ai.tools.model.StockQuote;
 import com.computrade.course.spring.ai.tools.model.Tenant;
 import com.computrade.course.spring.ai.tools.service.ChatService;
 import com.computrade.course.spring.ai.tools.service.FinnHubStockMarketService;
-import com.computrade.course.spring.ai.tools.service.StockMarketSecureToolService;
 import com.computrade.course.spring.ai.tools.service.StockMarketToolService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -68,19 +68,11 @@ public class ToolsController {
         return ResponseEntity.ok(schemas);
     }
 
-    @GetMapping("/chat/tool/context/quote")
-    public ResponseEntity<String> chatWithQuoteToolContext(String prompt, Tenant tenant) {
-        return ResponseEntity.ok(chatService.chatWithQuoteToolCotext(prompt, tenant));
-
-    }
-
-
     //  Returns a beautifully formatted JSON object on screen
     @GetMapping(value = "/chat/news", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> chatWithNewsTool(String prompt) {
-    // 1. Get the raw string response containing the direct tool output JSON
+        // 1. Get the raw string response containing the direct tool output JSON
         String rawChatResponse = chatService.chatWithQuoteTool(prompt);
-
         try {
             // 2. Try to parse the string back into a structural JSON object (List/Map)
             // so Spring's MessageConverter will pretty-print it out to the browser natively
@@ -91,6 +83,12 @@ public class ToolsController {
             log.warn("Response was not a valid JSON structure, returning as plain string");
             return ResponseEntity.ok(rawChatResponse);
         }
+
+    }
+
+    @GetMapping("/chat/tool/context/quote")
+    public ResponseEntity<String> chatWithQuoteToolContext(String prompt, Tenant tenant) {
+        return ResponseEntity.ok(chatService.chatWithQuoteToolCotext(prompt, tenant));
 
     }
 

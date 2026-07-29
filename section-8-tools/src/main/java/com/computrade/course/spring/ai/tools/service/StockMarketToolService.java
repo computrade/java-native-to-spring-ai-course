@@ -30,11 +30,11 @@ public class StockMarketToolService  {
 
     @Tool(
             name = "exportCompanyNews",
-            description = "Downloads and exports the raw recent company news articles for a given ticker symbol.",
+            description = "Downloads and exports the raw recent company news articles for a given symbol.",
             returnDirect = true // Snaps the LLM loop and delivers the raw collection directly to the controller
     )
     public List<CompanyNews> exportCompanyNews(
-            @ToolParam(description = "The uppercase equity ticker symbol, e.g. 'TSLA', 'MSFT'") String ticker
+            @ToolParam(description = "The uppercase equity symbol e.g. 'TSLA', 'MSFT'") String symbol
     ) {
         // 1. Calculate the dynamic 30-day date range automatically using local Java time
         LocalDate today = LocalDate.now();
@@ -44,7 +44,7 @@ public class StockMarketToolService  {
         String toDate = today.format(formatter);
         String fromDate = thirtyDaysAgo.format(formatter);
 
-        return finnHubStockMarketService.getCompanyNews(ticker, fromDate, toDate);
+        return finnHubStockMarketService.getCompanyNews(symbol, fromDate, toDate);
     }
 
 

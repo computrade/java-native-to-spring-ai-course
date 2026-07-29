@@ -16,8 +16,8 @@ spring:
     password: demopassword
     driver-class-name: org.postgresql.Driver
   ai:
-    tools:
-      throw-exception-on-error: true
+#    tools:
+#      throw-exception-on-error: true
     chat:
       memory:
         repository:

@@ -1,0 +1,5 @@
+description = 'section-9-mcp-server'
+
+dependencies {
+    implementation 'org.springframework.ai:spring-ai-starter-mcp-server'
+}

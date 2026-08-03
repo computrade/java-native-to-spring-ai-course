@@ -9,12 +9,10 @@ import org.springframework.stereotype.Service;
 public class ChatService {
 
     private final ChatClient chatClient;
-    private final StockMarketToolService stockMarketToolService;
 
-    public String chatWithQuoteTool(String prompt) {
+    public String chatWithMcpServer(String prompt) {
         return this.chatClient.prompt()
                 .user(prompt)
-                .tools(stockMarketToolService) // <-- Dynamic Per-Request Tool Scope!
                 .call()
                 .content();
     }

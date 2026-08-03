@@ -1,7 +1,7 @@
 description = 'section-9-mcp-client'
 
 dependencies {
-   // implementation 'org.springframework.ai:spring-ai-starter-mcp-client'
+    implementation 'org.springframework.ai:spring-ai-starter-mcp-client'
     implementation 'org.springframework.ai:spring-ai-starter-model-google-genai'
     implementation 'org.springframework.ai:spring-ai-starter-model-chat-memory-repository-jdbc'
     // new dependencies for this module:

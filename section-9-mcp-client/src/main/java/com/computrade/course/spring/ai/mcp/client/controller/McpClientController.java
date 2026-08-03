@@ -1,9 +1,7 @@
 package com.computrade.course.spring.ai.mcp.client.controller;
 
 
-import com.computrade.course.spring.ai.mcp.client.model.StockQuote;
 import com.computrade.course.spring.ai.mcp.client.service.ChatService;
-import com.computrade.course.spring.ai.mcp.client.service.FinnHubStockMarketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -19,19 +17,16 @@ import tools.jackson.databind.ObjectMapper;
 @RequiredArgsConstructor
 public class McpClientController {
 
-    private final FinnHubStockMarketService finnHubStockMarketService;
+
     private final ChatService chatService;
     private final ObjectMapper objectMapper;
 
-    @GetMapping("/quote")
-    public ResponseEntity<StockQuote> getMarketQuote(String symbol) {
-        return ResponseEntity.ok(finnHubStockMarketService.getSymbolQuote(symbol));
-    }
 
 
-    @GetMapping("/chat/tool/quote")
-    public ResponseEntity<String> chatWithQuoteTool(String prompt) {
-        return ResponseEntity.ok(chatService.chatWithQuoteTool(prompt));
+
+    @GetMapping("/chat")
+    public ResponseEntity<String> chat(String prompt) {
+        return ResponseEntity.ok(chatService.chatWithMcpServer(prompt));
 
     }
 
@@ -40,7 +35,7 @@ public class McpClientController {
     @GetMapping(value = "/chat/news", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> chatWithNewsTool(String prompt) {
         // 1. Get the raw string response containing the direct tool output JSON
-        String rawChatResponse = chatService.chatWithQuoteTool(prompt);
+        String rawChatResponse = chatService.chatWithMcpServer(prompt);
         try {
             // 2. Try to parse the string back into a structural JSON object (List/Map)
             // so Spring's MessageConverter will pretty-print it out to the browser natively

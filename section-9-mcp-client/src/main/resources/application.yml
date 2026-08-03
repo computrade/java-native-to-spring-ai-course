@@ -15,6 +15,23 @@ spring:
     password: demopassword
     driver-class-name: org.postgresql.Driver
   ai:
+    mcp:
+      client:
+        enabled: true
+        name: spring-ai-course-mcp-client
+        version: 1.0.0
+        request-timeout: 30s
+        type: SYNC  # or ASYNC for reactive applications
+        stdio:
+          servers-configuration: classpath:mcp-servers.json
+          connections:
+            server1:
+              command: ${java.home}\bin\java
+              args:
+                - -jar
+                - ../section-9-mcp-server/build/libs/section-9-mcp-server-1.0.0.jar
+              env:
+                FINNHUB_API_KEY: ${FINNHUB_API_KEY}
     tools:
       throw-exception-on-error: true
     chat:

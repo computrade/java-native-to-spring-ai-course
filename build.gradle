@@ -67,10 +67,6 @@ subprojects {
             environment 'FINNHUB_API_KEY', project.property('finnhubApiKey')
         }
 
-        if (project.hasProperty('gitHubToken')) {
-            environment 'GITHUB_PERSONAL_ACCESS_TOKEN', project.property('gitHubToken')
-        }
-
     }
 
 }

@@ -20,19 +20,6 @@
         "course-mcp-sequential-thinking",
         "mcp/sequentialthinking"
       ]
-    },
-    "github": {
-      "command": "docker",
-      "args": [
-        "run",
-        "-i",
-        "--rm",
-        "--name",
-        "course-mcp-github-server",
-        "-e",
-        "GITHUB_PERSONAL_ACCESS_TOKEN",
-        "ghcr.io/github/github-mcp-server"
-      ]
     }
   }
 }

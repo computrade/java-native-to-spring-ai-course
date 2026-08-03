@@ -32,10 +32,7 @@
         "-e",
         "GITHUB_PERSONAL_ACCESS_TOKEN",
         "ghcr.io/github/github-mcp-server"
-      ],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "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"
-      }
+      ]
     }
   }
 }

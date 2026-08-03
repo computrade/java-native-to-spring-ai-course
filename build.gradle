@@ -68,7 +68,7 @@ subprojects {
         }
 
         if (project.hasProperty('gitHubToken')) {
-            environment 'GITHUB_TOKEN', project.property('gitHubToken')
+            environment 'GITHUB_PERSONAL_ACCESS_TOKEN', project.property('gitHubToken')
         }
 
     }

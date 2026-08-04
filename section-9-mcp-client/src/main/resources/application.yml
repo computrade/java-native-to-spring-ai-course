@@ -20,18 +20,22 @@ spring:
         enabled: true
         name: spring-ai-course-mcp-client
         version: 1.0.0
-        request-timeout: 30s
+        request-timeout: 60s
         type: SYNC  # or ASYNC for reactive applications
         stdio:
-          servers-configuration: classpath:mcp-servers.json
+          #servers-configuration: classpath:mcp-servers.json
           connections:
-            server1:
-              command: ${java.home}\bin\java
+            finnhub-mcp-server:
+              command: docker
               args:
-                - -jar
-                - ../section-9-mcp-server/build/libs/section-9-mcp-server-1.0.0.jar
-              env:
-                FINNHUB_API_KEY: ${FINNHUB_API_KEY}
+                - run
+                - -i
+                - --rm
+                - -e
+                - MCP_TRANSPORT_TYPE=stdio
+                - -e
+                - FINNHUB_API_KEY=${FINNHUB_API_KEY}
+                - ghcr.io/cyanheads/finnhub-mcp-server:latest
     tools:
       throw-exception-on-error: true
     chat:

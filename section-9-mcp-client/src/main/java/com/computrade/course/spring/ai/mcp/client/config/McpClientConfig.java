@@ -4,8 +4,10 @@ package com.computrade.course.spring.ai.mcp.client.config;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.tool.ToolCallbackProvider;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
 import org.springframework.web.client.RestClient;
 
 
@@ -13,24 +15,17 @@ import org.springframework.web.client.RestClient;
 public class McpClientConfig {
 
 
+    @Value("classpath:prompts/system-prompt.md")
+    private Resource systemPromptResource;
+
     @Bean
     public ChatClient defaultChatClient(ChatClient.Builder builder,
                                         ToolCallbackProvider toolCallbackProvider) {
         return builder
                 .defaultAdvisors(new SimpleLoggerAdvisor())
+                .defaultSystem(systemPromptResource)
                 .defaultTools(toolCallbackProvider)
                 .build();
-    }
-
-
-    @Bean
-    public RestClient.Builder restClientBuilder() {
-        return RestClient.builder();
-    }
-
-    @Bean
-    public RestClient finnHubRestClient(RestClient.Builder builder) {
-        return builder.baseUrl("https://finnhub.io/api/v1").build();
     }
 
 }

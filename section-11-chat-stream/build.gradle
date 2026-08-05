@@ -1,0 +1,5 @@
+description = 'section-11-chat-stream'
+
+dependencies {
+    implementation 'org.springframework.ai:spring-ai-starter-model-google-genai'
+}

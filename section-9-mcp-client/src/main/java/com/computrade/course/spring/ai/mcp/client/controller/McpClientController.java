@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/mcp")
+@RequestMapping("/api/mcp/sync")
 @RequiredArgsConstructor
 public class McpClientController {
 

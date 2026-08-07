@@ -7,7 +7,8 @@
         "npx",
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "C:\\Users\\yuval\\Desktop"
+        "C:\\Users\\yuval\\Desktop",
+        "C:\\Users\\yuval\\Downloads"
       ]
     },
     "sequentialthinking": {

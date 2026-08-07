@@ -22,12 +22,7 @@ spring:
         version: 1.0.0
         request-timeout: 30s
         type: SYNC  # or ASYNC for reactive applications
-        streamable-http:
-          connections:
-            pipeworx-io-mcp-server:
-              url: https://gateway.pipeworx.io
-              endpoint: /pipeworx-catalog/mcp
-
+        toolcallback.enabled: true
         stdio:
           servers-configuration: classpath:mcp-servers.json
           connections:
@@ -44,6 +39,11 @@ spring:
                 - -e
                 - FINNHUB_API_KEY=${FINNHUB_API_KEY}
                 - ghcr.io/cyanheads/finnhub-mcp-server:latest
+        streamable-http:
+          connections:
+            pipeworx-io-mcp-server:
+              url: https://gateway.pipeworx.io
+              endpoint: /pipeworx-catalog/mcp
     tools:
       throw-exception-on-error: true
     chat:

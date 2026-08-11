@@ -22,9 +22,13 @@ public class ChatService {
     private final ChatClient chatClient;
 
     public Flux<String> chatStream(String prompt) {
+
+        log.info("1. [START] ChatClient streaming call on thread [{}] for prompt: {}", Thread.currentThread().getName(), prompt);      // Simulating or running the LLM/MCP Tool call
+
+
         return Flux.defer(() -> {
             // Log added before calling chatClient
-            log.info("1. [START] ChatClient streaming call on thread [{}] for prompt: {}",
+            log.info("2. [EXECUTE] ChatClient streaming call on thread [{}] for prompt: {}",
                     Thread.currentThread().getName(), prompt);
 
             return chatClient.prompt()
@@ -37,15 +41,17 @@ public class ChatService {
 
     public Mono<String> chatWithMcpServer(String prompt) {
 
+        log.info("1. [START] ChatClient streaming call on thread [{}] for prompt: {}", Thread.currentThread().getName(), prompt);      // Simulating or running the LLM/MCP Tool call
+
         // Defer execution to Mono so it runs asynchronously
         // boundedElastic offloads the blocking chatClient.call() operation off the main Event Loop thread and onto a dedicated background thread pool
         return Mono.fromCallable(() -> {
-                    log.info("1. [START] ChatClient streaming call on thread [{}] for prompt: {}", Thread.currentThread().getName(), prompt);      // Simulating or running the LLM/MCP Tool call
+                    log.info("2. [EXECUTE] ChatClient streaming call on thread [{}] for prompt: {}", Thread.currentThread().getName(), prompt);      // Simulating or running the LLM/MCP Tool call
                     String result = chatClient.prompt().user(prompt).call().content();
                     return result;
                 })
                 .subscribeOn(Schedulers.boundedElastic())
-                .doOnSuccess(res -> log.info("2. [RESPONSE READY] Returned to subscriber on thread: {}", Thread.currentThread().getName()));
+                .doOnSuccess(res -> log.info("3. [RESPONSE READY] Returned to subscriber on thread: [{}]", Thread.currentThread().getName()));
     }
 
 

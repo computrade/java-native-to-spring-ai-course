@@ -1,4 +1,4 @@
-package com.computrade.course.spring.ai.stream.client.config;
+package com.computrade.course.spring.ai.stream.config;
 
 
 import org.springframework.ai.chat.client.ChatClient;

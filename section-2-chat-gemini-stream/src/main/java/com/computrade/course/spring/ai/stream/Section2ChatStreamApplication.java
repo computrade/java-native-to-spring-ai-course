@@ -1,13 +1,13 @@
-package com.computrade.course.spring.ai.stream.client;
+package com.computrade.course.spring.ai.stream;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Section11StreamClientApplication {
+public class Section2ChatStreamApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Section11StreamClientApplication.class, args);
+        SpringApplication.run(Section2ChatStreamApplication.class, args);
     }
 
 }

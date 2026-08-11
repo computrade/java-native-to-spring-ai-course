@@ -1,4 +1,4 @@
-package com.computrade.course.spring.ai.stream.client.service;
+package com.computrade.course.spring.ai.stream.service;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

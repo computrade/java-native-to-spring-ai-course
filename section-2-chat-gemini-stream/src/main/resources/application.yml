@@ -4,7 +4,7 @@ logging:
 
 spring:
   application:
-    name: section-11-chat-stream
+    name: section-2-chat-gemini-stream
   datasource:
     url: jdbc:postgresql://localhost:5432/springai_db
     username: demouser

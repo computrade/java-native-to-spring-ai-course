@@ -24,8 +24,6 @@ public class ChatService {
     public Flux<String> chatStream(String prompt) {
 
         log.info("1. [START] ChatClient streaming call on thread [{}] for prompt: {}", Thread.currentThread().getName(), prompt);      // Simulating or running the LLM/MCP Tool call
-
-
         return Flux.defer(() -> {
             // Log added before calling chatClient
             log.info("2. [EXECUTE] ChatClient streaming call on thread [{}] for prompt: {}",
@@ -35,7 +33,7 @@ public class ChatService {
                     .user(prompt)
                     .stream()
                     .content()
-                    .doOnNext(token -> log.info("2. [RESPONSE READY] Chunk received on [{}]: {}", Thread.currentThread().getName(), token));
+                    .doOnNext(token -> log.info("3. [RESPONSE READY] Chunk received on [{}]: {}", Thread.currentThread().getName(), token));
         }).subscribeOn(Schedulers.boundedElastic());
     }
 

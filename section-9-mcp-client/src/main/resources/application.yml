@@ -20,11 +20,11 @@ spring:
         enabled: true
         name: spring-ai-course-mcp-client
         version: 1.0.0
-        request-timeout: 30s
+        request-timeout: 60s
         type: SYNC  # or ASYNC for reactive applications
         toolcallback.enabled: true
         stdio:
-          servers-configuration: classpath:mcp-servers.json
+#          servers-configuration: classpath:mcp-servers.json
           connections:
             finnhub-mcp-server:
               command: docker
@@ -55,7 +55,7 @@ spring:
       genai:
         api-key: ${GEMINI_API_KEY}
         chat:
-          model: gemini-3.5-flash
+          model: gemini-3.5-flash-lite
         embedding:
           api-key: ${GEMINI_API_KEY}
           text:

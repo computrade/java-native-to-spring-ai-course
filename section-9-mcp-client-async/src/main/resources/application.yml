@@ -20,19 +20,17 @@ spring:
         enabled: true
         name: spring-ai-course-mcp-client-async
         version: 1.0.0
-        request-timeout: 30s
+        request-timeout: 60s
         type: ASYNC
         stdio:
           connections:
-            time-mcp-server:
-              command: docker
+            everything-mcp-server:
+              command: cmd.exe
               args:
-                - run
-                - -i
-                - --rm
-                - --name
-                - course-time-mcp-server
-                - mcp/time
+                - /c
+                - npx
+                - -y
+                - "@modelcontextprotocol/server-everything"
     tools:
       throw-exception-on-error: true
     chat:

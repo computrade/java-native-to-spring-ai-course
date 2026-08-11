@@ -24,8 +24,28 @@ public class ChatStreamController {
     @GetMapping(value = "/chat", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> chat(String prompt) {
         return Mono.fromCallable(() -> chatService.chat(prompt))
-                .subscribeOn(Schedulers.boundedElastic()) // Offloads tool resolution off the Netty thread
-                .flatMapMany(flux -> flux);
+                .subscribeOn(Schedulers.boundedElastic()) // Phase 1: Offload setup
+                .flatMapMany(flux -> flux);               // Phase 2: Stream tokens live
     }
+
+
+//    @GetMapping(value = "/chat", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+//    public Flux<String> chat(@RequestParam String prompt) {
+//        return Flux.defer(() -> chatService.chat(prompt))
+//                .subscribeOn(Schedulers.boundedElastic()) ;// Offloads tool resolution off the Netty thread
+//                //.flatMapMany(flux -> flux);
+//    }
+
+
+
+//    @GetMapping(value = "/chat", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+//    public Flux<String> chat(@RequestParam String prompt) {
+//        return Flux.defer(() -> {
+//            // This log and chatService.chat() call are NOW GUARANTEED
+//            // to run on boundedElastic, not the Netty thread!
+//            log.info("Executing chat on thread: {}", Thread.currentThread().getName());
+//            return chatService.chat(prompt);
+//        }).subscribeOn(Schedulers.boundedElastic());
+//    }
 
 }

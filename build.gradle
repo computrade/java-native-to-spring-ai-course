@@ -31,7 +31,7 @@ subprojects {
     dependencies {
         implementation platform("org.springframework.ai:spring-ai-bom:${springAiVersion}")
 
-        if (project.name.contains('stream')) {
+        if (project.name.contains('stream') || project.name.contains('async') ) {
             implementation 'org.springframework.boot:spring-boot-starter-webflux'
         } else {
             implementation 'org.springframework.boot:spring-boot-starter-webmvc'

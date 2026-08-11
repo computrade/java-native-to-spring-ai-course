@@ -19,21 +19,12 @@ import java.util.List;
 public class McpClientAsyncConfig {
 
 
-    @Value("classpath:prompts/system-prompt.md")
-    private Resource systemPromptResource;
-
     @Bean
     public ChatClient defaultChatClient(ChatClient.Builder builder,
-                                        List<McpAsyncClient> asyncClients) {
-
-
-        ToolCallbackProvider toolCallbackProvider = AsyncMcpToolCallbackProvider.builder()
-                .mcpClients(asyncClients)
-                .build();
-
+                                        ToolCallbackProvider toolCallbackProvider) {
+        
         return builder
-                .defaultAdvisors(new SimpleLoggerAdvisor())
-                .defaultSystem(systemPromptResource)
+                //.defaultAdvisors(new SimpleLoggerAdvisor())
                 .defaultTools(toolCallbackProvider)
                 .build();
     }

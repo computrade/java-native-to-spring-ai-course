@@ -1,9 +1,9 @@
-package com.computrade.course.spring.ai.mcp.server.stream.service;
+package com.computrade.course.spring.ai.mcp.server.http.service;
 
 
 
-import com.computrade.course.spring.ai.mcp.server.stream.model.CompanyNews;
-import com.computrade.course.spring.ai.mcp.server.stream.model.StockQuote;
+import com.computrade.course.spring.ai.mcp.server.http.model.CompanyNews;
+import com.computrade.course.spring.ai.mcp.server.http.model.StockQuote;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Value;

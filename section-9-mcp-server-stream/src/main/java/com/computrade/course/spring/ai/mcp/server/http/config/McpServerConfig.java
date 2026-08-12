@@ -1,6 +1,6 @@
-package com.computrade.course.spring.ai.mcp.server.stream.config;
+package com.computrade.course.spring.ai.mcp.server.http.config;
 
-import com.computrade.course.spring.ai.mcp.server.stream.service.StockMarketToolService;
+import com.computrade.course.spring.ai.mcp.server.http.service.StockMarketToolService;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.context.annotation.Bean;

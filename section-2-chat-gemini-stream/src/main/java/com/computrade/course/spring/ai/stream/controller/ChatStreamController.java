@@ -24,7 +24,7 @@ public class ChatStreamController {
     public Flux<String> chat(String prompt) {
         return Mono.fromCallable(() -> chatService.chat(prompt))
                 .subscribeOn(Schedulers.boundedElastic()) // Phase 1: Offload setup
-                .flatMapMany(flux -> flux);               // Phase 2: Stream tokens live
+                .flatMapMany(flux -> flux);    // Phase 2: Stream tokens live
     }
 
 

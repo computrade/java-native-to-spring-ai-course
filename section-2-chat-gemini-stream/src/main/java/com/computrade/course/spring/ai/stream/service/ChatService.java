@@ -14,6 +14,8 @@ public class ChatService {
     private final ChatClient chatClient;
 
     public Flux<String> chat(String prompt) {
+
+        log.info("1. START: calling chatClient on thread [{}]",Thread.currentThread().getName());
         return chatClient.prompt()
                 .user(prompt)
                 .stream()

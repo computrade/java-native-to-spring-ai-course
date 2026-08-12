@@ -1,0 +1,23 @@
+logging:
+  level:
+    root: INFO
+  file:
+    name: section-9-mcp-server-stdio.log
+
+app:
+  finnhub:
+    api-key: ${FINNHUB_API_KEY}
+
+spring:
+  main:
+    web-application-type: none # Disable web application for STDIO
+    banner-mode: off
+  application:
+    name: section-9-mcp-server-stdio
+  ai:
+    mcp:
+      server:
+        stdio: true
+        name: stock-market-mcp-server
+        type: sync
+

@@ -18,10 +18,9 @@ public class StockMarketToolService  {
 
     private final FinnHubStockMarketService finnHubStockMarketService;
 
-
     @Tool(
             name = "fetchStockPrice",
-            description = "Retrieves the latest real-time stock quote metrics (current, high, low) for a given equity ticker symbol."
+            description = "Retrieves the latest real-time stock quote metrics (current, high, low) for a given equity symbol."
     )
     public StockQuote fetchStockPrice(
             @ToolParam(description = "The uppercase stock exchange ticker symbol, for example 'AAPL', 'GOOG', 'TSLA'.") String symbol
@@ -31,8 +30,7 @@ public class StockMarketToolService  {
 
     @Tool(
             name = "exportCompanyNews",
-            description = "Downloads and exports the raw recent company news articles for a given symbol.",
-            returnDirect = true // Snaps the LLM loop and delivers the raw collection directly to the controller
+            description = "Downloads and exports the raw recent company news articles for a given symbol."
     )
     public List<CompanyNews> exportCompanyNews(
             @ToolParam(description = "The uppercase equity symbol e.g. 'TSLA', 'MSFT'") String symbol

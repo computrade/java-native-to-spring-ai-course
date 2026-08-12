@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Section9McpServerApplication {
+public class Section9McpServerStdioApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Section9McpServerApplication.class, args);
+        SpringApplication.run(Section9McpServerStdioApplication.class, args);
     }
 
 }

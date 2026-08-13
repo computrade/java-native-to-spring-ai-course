@@ -2,7 +2,7 @@ logging:
   level:
     root: INFO
   file:
-    name: section-9-mcp-server-stdio.log
+    name: section-9-mcp-server-stdio\section-9-mcp-server-stdio.log
 
 app:
   finnhub:

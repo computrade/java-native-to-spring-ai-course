@@ -1,6 +1,7 @@
 package com.computrade.course.spring.ai.mcp.server.http.service;
 
 import com.computrade.course.spring.ai.mcp.server.http.model.CompanyNews;
+import com.computrade.course.spring.ai.mcp.server.http.model.RecommendationTrend;
 import com.computrade.course.spring.ai.mcp.server.http.model.StockQuote;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.tool.annotation.Tool;
@@ -43,6 +44,18 @@ public class StockMarketToolService  {
         String fromDate = thirtyDaysAgo.format(formatter);
 
         return finnHubStockMarketService.getCompanyNews(symbol, fromDate, toDate);
+    }
+
+    @Tool(
+            name = "getAnalystRecommendations",
+            description = "Retrieves Wall Street analyst buy/hold/sell recommendation trends for a given stock symbol"
+    )
+    public RecommendationTrend getAnalystRecommendations(
+            @ToolParam(description = "The stock ticker symbol e.g., AAPL, TSLA, NVDA") String symbol) {
+
+        RecommendationTrend trend = finnHubStockMarketService.getLatestRecommendationTrend(symbol);
+        return trend;
+
     }
 
 

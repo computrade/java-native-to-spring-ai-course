@@ -1,5 +1,0 @@
-description = 'section-9-mcp-server-stream'
-
-dependencies {
-    implementation('org.springframework.ai:spring-ai-starter-mcp-server-webflux')
-}

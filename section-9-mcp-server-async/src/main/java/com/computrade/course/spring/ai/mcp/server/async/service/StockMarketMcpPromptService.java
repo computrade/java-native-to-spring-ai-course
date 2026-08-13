@@ -13,10 +13,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class StockMarketMcpPromptService {
 
-    // =========================================================================
-    // 2. PROMPTS LOGIC
-    // =========================================================================
-
     /**
      * Generates a simple, static prompt template with zero arguments.
      */

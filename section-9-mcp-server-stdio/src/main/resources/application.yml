@@ -19,7 +19,7 @@ spring:
       server:
         stdio: true
         name: stock-market-mcp-server
-        type: sync
+        type: SYNC
         capabilities:
           prompt: true
           resource: true

@@ -1,4 +1,4 @@
-package com.computrade.course.spring.ai.mcp.server.async.model;
+package com.computrade.course.spring.ai.mcp.server.http.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

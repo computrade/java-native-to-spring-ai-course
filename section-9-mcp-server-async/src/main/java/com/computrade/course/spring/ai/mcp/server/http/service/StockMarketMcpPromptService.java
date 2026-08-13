@@ -1,4 +1,4 @@
-package com.computrade.course.spring.ai.mcp.server.async.service;
+package com.computrade.course.spring.ai.mcp.server.http.service;
 
 import io.modelcontextprotocol.spec.McpSchema;
 import lombok.RequiredArgsConstructor;

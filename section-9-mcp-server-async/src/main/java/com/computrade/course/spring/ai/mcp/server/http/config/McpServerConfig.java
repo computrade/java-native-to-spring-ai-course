@@ -1,8 +1,8 @@
-package com.computrade.course.spring.ai.mcp.server.async.config;
+package com.computrade.course.spring.ai.mcp.server.http.config;
 
-import com.computrade.course.spring.ai.mcp.server.async.service.StockMarketMcpPromptService;
-import com.computrade.course.spring.ai.mcp.server.async.service.StockMarketMcpResourceService;
-import com.computrade.course.spring.ai.mcp.server.async.service.StockMarketToolService;
+import com.computrade.course.spring.ai.mcp.server.http.service.StockMarketMcpPromptService;
+import com.computrade.course.spring.ai.mcp.server.http.service.StockMarketMcpResourceService;
+import com.computrade.course.spring.ai.mcp.server.http.service.StockMarketToolService;
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.spec.McpSchema;

@@ -1,6 +1,6 @@
-package com.computrade.course.spring.ai.mcp.server.async.service;
+package com.computrade.course.spring.ai.mcp.server.http.service;
 
-import com.computrade.course.spring.ai.mcp.server.async.model.StockQuote;
+import com.computrade.course.spring.ai.mcp.server.http.model.StockQuote;
 import io.modelcontextprotocol.spec.McpSchema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

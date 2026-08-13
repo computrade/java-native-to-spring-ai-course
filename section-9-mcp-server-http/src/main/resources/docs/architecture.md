@@ -31,10 +31,10 @@ Pre-defined prompt templates to guide AI analysis:
 
 ## ⚙ Technology Stack
 
-| Component | Technology                  |
-| :--- |:----------------------------|
-| **Framework** | Spring Boot / Spring AI 2.0 |
-| **Server Engine** | Sync Transport (STDIO)      |
-| **JDK Version** | Java 25                     |
-| **Build Tool** | Gradle 9.0                  |
-| **External API** | Finnhub Financial API       |
+| Component | Technology                                        |
+| :--- |:--------------------------------------------------|
+| **Framework** | Spring Boot / Spring AI 2.0                       |
+| **Server Engine** | HTTP - SYNC SSE Transport 
+| **JDK Version** | Java 25                                           |
+| **Build Tool** | Gradle 9.0                                        |
+| **External API** | Finnhub Financial API                             |

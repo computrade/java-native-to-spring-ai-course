@@ -41,6 +41,22 @@ public class McpServerConfig {
         };
     }
 
+    private static void handleResource(StockMarketMcpResourceService resourceService, McpServer.SyncSpecification<?> serverSpec) {
+        // === Register Markdown Documentation Resource ===
+        McpSchema.Resource markdownDocResource = McpSchema.Resource.builder(
+                        "stock://docs/architecture.md",
+                        "Server Architecture Documentation")
+                .description("Provides a Markdown document explaining how this MCP Server works")
+                .mimeType("text/markdown")
+                .build();
+
+        var markdownDocSpec = new McpServerFeatures.SyncResourceSpecification(
+                markdownDocResource,
+                (exchange, request) -> resourceService.getServerArchitectureDoc()
+        );
+        serverSpec.resources(markdownDocSpec);
+    }
+
 
     private static void handlePrompt(StockMarketMcpPromptService promptService, McpServer.SyncSpecification<?> serverSpec) {
         McpSchema.Prompt simplePromptMetaData = McpSchema.Prompt.builder("general-stock-evaluation")
@@ -56,22 +72,6 @@ public class McpServerConfig {
                 }
         );
         serverSpec.prompts(simplePromptSpec);
-    }
-
-    private static void handleResource(StockMarketMcpResourceService resourceService, McpServer.SyncSpecification<?> serverSpec) {
-        // === Register Markdown Documentation Resource ===
-        McpSchema.Resource markdownDocResource = McpSchema.Resource.builder(
-                        "stock://docs/architecture.md",
-                        "Server Architecture Documentation")
-                .description("Provides a Markdown document explaining how this MCP Server works")
-                .mimeType("text/markdown")
-                .build();
-
-        var markdownDocSpec = new McpServerFeatures.SyncResourceSpecification(
-                markdownDocResource,
-                (exchange, request) -> resourceService.getServerArchitectureDoc()
-        );
-        serverSpec.resources(markdownDocSpec);
     }
 
     @Bean

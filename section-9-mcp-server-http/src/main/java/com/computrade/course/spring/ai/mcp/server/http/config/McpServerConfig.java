@@ -102,7 +102,7 @@ public class McpServerConfig {
     }
 
     private static void handleResourceTemplate(StockMarketMcpResourceService resourceService, McpServer.SyncSpecification<?> serverSpec) {
-        // === A. Register Resource ===
+
         // === Register Resource as a ResourceTemplate ===
         McpSchema.ResourceTemplate resourceTemplate = McpSchema.ResourceTemplate.builder(
                         "stock://market-summary/{symbol}",
@@ -111,18 +111,12 @@ public class McpServerConfig {
                 .mimeType("text/plain")
                 .build();
 
-        // 🟢 Using AsyncResourceSpecification explicitly
         var resourceTemplateSpec = new McpServerFeatures.SyncResourceTemplateSpecification(
                 resourceTemplate,
                 (exchange, request) -> {
                     String uri = request.uri();
                     String symbol = uri.substring(uri.lastIndexOf('/') + 1);
-                    if (symbol.isBlank() || symbol.contains("{")) {
-                        symbol = "SPY";
-                    }
-                    final String targetSymbol = symbol;
-                    return resourceService.getStockSummaryResource(targetSymbol);
-
+                    return resourceService.getStockSummaryResource(symbol);
                 }
         );
 

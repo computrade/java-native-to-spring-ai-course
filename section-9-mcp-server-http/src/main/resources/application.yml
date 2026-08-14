@@ -29,7 +29,6 @@ spring:
           tool: true
           resource: true
           prompt: true
-          completion: true
 
 
 

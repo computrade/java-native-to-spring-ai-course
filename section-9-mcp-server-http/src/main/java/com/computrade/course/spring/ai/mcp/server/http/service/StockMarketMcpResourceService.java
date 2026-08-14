@@ -22,10 +22,6 @@ public class StockMarketMcpResourceService {
 
     private final FinnHubStockMarketService finnHubStockMarketService;
 
-    // =========================================================================
-    // 1. RESOURCES LOGIC
-    // =========================================================================
-
     /**
      * Provides a dynamically generated market summary resource.
      * URI Format: stock://market-summary/{symbol}
@@ -55,12 +51,6 @@ public class StockMarketMcpResourceService {
 
         return McpSchema.ReadResourceResult.builder(List.of(textContents)).build();
     }
-
-
-
-    // =========================================================================
-    // MARKDOWN FILE RESOURCE LOGIC
-    // =========================================================================
 
     /**
      * Reads a Markdown documentation file directly from the classpath/resources directory.

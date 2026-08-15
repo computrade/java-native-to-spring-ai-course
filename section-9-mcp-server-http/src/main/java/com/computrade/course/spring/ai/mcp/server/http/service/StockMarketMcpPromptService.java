@@ -42,8 +42,7 @@ public class StockMarketMcpPromptService {
                 Please perform a comprehensive stock analysis for ticker: {symbol}.
                 Consider that the user's risk tolerance level is: {riskTolerance}.
                 
-                Please use the available tools (fetchStockPrice, exportCompanyNews) 
-                to retrieve real-time market data before formulating your final investment recommendation.
+                Please use the available tools to retrieve real-time market data before formulating your final investment recommendation.
                 """;
 
         PromptTemplate promptTemplate = new PromptTemplate(template);

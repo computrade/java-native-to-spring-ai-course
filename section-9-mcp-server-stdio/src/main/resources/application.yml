@@ -1,6 +1,6 @@
 logging:
   level:
-    root: OFF
+    root: INFO #OFF
   file:
     name: section-9-mcp-server-stdio\section-9-mcp-server-stdio.log
 

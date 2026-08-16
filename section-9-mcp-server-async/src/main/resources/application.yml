@@ -26,5 +26,6 @@ spring:
           tool: true #default
           resource: true #default
           prompt: true #default
+          #completion: false
 
 

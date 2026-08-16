@@ -1,5 +1,6 @@
 package com.computrade.course.spring.ai.mcp.server.http.config;
 
+import com.computrade.course.spring.ai.mcp.server.http.service.StockMarketMcpCompletionService;
 import com.computrade.course.spring.ai.mcp.server.http.service.StockMarketMcpPromptService;
 import com.computrade.course.spring.ai.mcp.server.http.service.StockMarketMcpResourceService;
 import com.computrade.course.spring.ai.mcp.server.http.service.StockMarketToolService;
@@ -30,12 +31,14 @@ public class McpServerConfig {
 
     @Bean
     public McpAsyncServerCustomizer mcpAsyncServerCustomizer(StockMarketMcpResourceService resourceService,
-                                                             StockMarketMcpPromptService promptService) {
+                                                             StockMarketMcpPromptService promptService,
+                                                             StockMarketMcpCompletionService completionService) {
         return serverSpec -> {
             handleResource(resourceService, serverSpec);
             handleResourceTemplate(resourceService, serverSpec);
             handlePrompt(promptService, serverSpec);
             handleTemplatePrompt(promptService, serverSpec);
+            handleCompletion(completionService, serverSpec);
         };
     }
 
@@ -132,6 +135,22 @@ public class McpServerConfig {
         serverSpec.prompts(promptTemplateSpec);
     }
 
+
+    private static void handleCompletion(
+            StockMarketMcpCompletionService completionService,
+            McpServer.AsyncSpecification<?> serverSpec) {
+
+        // 🟢 3. Register autocompletion for the resource template URI
+        var resourceCompletionSpec = new McpServerFeatures.AsyncCompletionSpecification(
+                new McpSchema.ResourceReference("stock://market-summary/{symbol}"),
+                (exchange, request) -> {
+                    String userPrefix = (request.argument() != null) ? request.argument().value() : "";
+                    return Mono.just(completionService.getSymbolCompletions(userPrefix));
+                }
+        );
+
+        serverSpec.completions(resourceCompletionSpec);
+    }
 
     @Bean
     public RestClient.Builder restClientBuilder() {

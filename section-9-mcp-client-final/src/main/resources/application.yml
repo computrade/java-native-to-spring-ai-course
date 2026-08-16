@@ -1,0 +1,33 @@
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: DEBUG
+    org.springframework.web.client.RestClient: DEBUG
+
+spring:
+  application:
+    name: section-9-mcp-client-final
+  ai:
+    mcp:
+      client:
+        enabled: true
+        name: spring-ai-course-mcp-client-final
+        type: SYNC  # or ASYNC for reactive applications
+        toolcallback.enabled: true
+        stdio:
+          connections:
+            our-finnhub-mcp-server:
+              command: "C:/Users/yuval/.jdks/openjdk-25.0.2/bin/java"
+              args:
+                - "-jar"
+                - "../section-9-mcp-server-stdio/build/libs/section-9-mcp-server-stdio-1.0.0.jar"
+              env:
+                FINNHUB_API_KEY: ${FINNHUB_API_KEY}
+    tools:
+      throw-exception-on-error: true
+    google:
+      genai:
+        api-key: ${GEMINI_API_KEY}
+        chat:
+          model: gemini-3.5-flash-lite
+
+

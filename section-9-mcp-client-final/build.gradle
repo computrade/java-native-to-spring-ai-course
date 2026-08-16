@@ -1,0 +1,6 @@
+description = 'section-9-mcp-client-final'
+
+dependencies {
+    implementation 'org.springframework.ai:spring-ai-starter-mcp-client'
+    implementation 'org.springframework.ai:spring-ai-starter-model-google-genai'
+}

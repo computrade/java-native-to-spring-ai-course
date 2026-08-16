@@ -3,6 +3,7 @@ package com.computrade.course.spring.ai.mcp.server.http.service;
 
 
 import com.computrade.course.spring.ai.mcp.server.http.model.CompanyNews;
+import com.computrade.course.spring.ai.mcp.server.http.model.RecommendationTrend;
 import com.computrade.course.spring.ai.mcp.server.http.model.StockQuote;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
@@ -62,6 +63,32 @@ public class FinnHubStockMarketService {
         // 3. Return the limited stream of structural POJOs directly to the response pipeline
         return newsList.stream().limit(5).toList();
     }
+
+    public RecommendationTrend getLatestRecommendationTrend(String symbol) {
+        if (symbol == null || symbol.trim().isEmpty()) {
+            throw new IllegalArgumentException("Symbol cannot be null or empty");
+        }
+
+        String cleanSymbol = symbol.trim().toUpperCase();
+
+        // Finnhub returns an array/list of RecommendationTrend items sorted by period
+        RecommendationTrend[] trends = finnHubRestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/stock/recommendation")
+                        .queryParam("symbol", cleanSymbol)
+                        .queryParam("token", apiKey)
+                        .build())
+                .retrieve()
+                .body(RecommendationTrend[].class);
+
+        if (trends == null || trends.length == 0) {
+            throw new RuntimeException("No analyst recommendation data found for ticker: " + cleanSymbol);
+        }
+
+        // Return the most recent period (first item in the list)
+        return trends[0];
+    }
+
 
 }
 

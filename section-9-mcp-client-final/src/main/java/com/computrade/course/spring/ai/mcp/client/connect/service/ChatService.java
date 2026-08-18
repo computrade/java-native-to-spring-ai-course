@@ -25,7 +25,7 @@ public class ChatService {
         // 3. Send user query to ChatClient with automatically injected resource metadata
         return chatClient.prompt()
                 .system(sys -> sys.text("""
-                        You are an AI Assistant integrated with an MCP erver.
+                        You are an AI Assistant integrated with an MCP server.
                         
                         The following MCP Resources are currently registered and available in the system:
                         {resources}

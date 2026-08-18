@@ -1,4 +1,4 @@
-package com.computrade.course.spring.ai.mcp.client.model;
+package com.computrade.course.spring.ai.mcp.client.async.model;
 
 import lombok.Builder;
 import lombok.Data;

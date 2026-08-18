@@ -1,4 +1,4 @@
-package com.computrade.course.spring.ai.mcp.client.config;
+package com.computrade.course.spring.ai.mcp.client.async.config;
 
 
 import io.modelcontextprotocol.client.McpAsyncClient;

@@ -1,6 +1,6 @@
-package com.computrade.course.spring.ai.mcp.client.controller;
+package com.computrade.course.spring.ai.mcp.client.async.controller;
 
-import com.computrade.course.spring.ai.mcp.client.model.RestfulError;
+import com.computrade.course.spring.ai.mcp.client.async.model.RestfulError;
 import org.springframework.ai.tool.execution.ToolExecutionException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
-package com.computrade.course.spring.ai.mcp.client.controller;
+package com.computrade.course.spring.ai.mcp.client.async.controller;
 
 
-import com.computrade.course.spring.ai.mcp.client.service.ChatService;
+import com.computrade.course.spring.ai.mcp.client.async.service.ChatService;
 import io.modelcontextprotocol.spec.McpSchema;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

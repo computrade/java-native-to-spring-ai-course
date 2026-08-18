@@ -1,4 +1,4 @@
-package com.computrade.course.spring.ai.mcp.client;
+package com.computrade.course.spring.ai.mcp.client.async;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

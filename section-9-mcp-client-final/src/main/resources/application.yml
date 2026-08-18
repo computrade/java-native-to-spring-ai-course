@@ -12,7 +12,7 @@ spring:
         enabled: true
         name: spring-ai-course-mcp-client-final
         type: SYNC  # or ASYNC for reactive applications
-        toolcallback.enabled: true
+        toolcallback.enabled: true #default
         stdio:
           connections:
             our-finnhub-mcp-server:

@@ -1,6 +1,7 @@
-package com.computrade.course.spring.ai.mcp.client.config;
+package com.computrade.course.spring.ai.mcp.client.connect.config;
 
 
+import com.computrade.course.spring.ai.mcp.client.connect.service.McpResourceToolCallback;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.tool.ToolCallbackProvider;
@@ -16,10 +17,11 @@ public class McpClientConfig {
 
     @Bean
     public ChatClient defaultChatClient(ChatClient.Builder builder,
-                                        ToolCallbackProvider toolCallbackProvider) {
+                                        ToolCallbackProvider toolCallbackProvider,
+                                        McpResourceToolCallback mcpResourceToolCallback) {
         return builder
                 .defaultAdvisors(new SimpleLoggerAdvisor())
-                .defaultTools(toolCallbackProvider)
+                .defaultTools(toolCallbackProvider, mcpResourceToolCallback)
                 .build();
     }
 

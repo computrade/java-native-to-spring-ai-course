@@ -1,7 +1,6 @@
-package com.computrade.course.spring.ai.mcp.client.controller;
+package com.computrade.course.spring.ai.mcp.client.connect.controller;
 
-
-import com.computrade.course.spring.ai.mcp.client.service.ChatService;
+import com.computrade.course.spring.ai.mcp.client.connect.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -23,5 +22,9 @@ public class McpClientController {
 
     }
 
+    @GetMapping("/chat/resources")
+    public ResponseEntity<String> chatResources(String prompt) {
+        return ResponseEntity.ok(chatService.chatWithResources(prompt));
 
+    }
 }

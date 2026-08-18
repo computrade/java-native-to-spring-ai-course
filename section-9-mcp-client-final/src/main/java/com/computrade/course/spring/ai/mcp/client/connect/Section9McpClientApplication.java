@@ -1,7 +1,10 @@
-package com.computrade.course.spring.ai.mcp.client;
+package com.computrade.course.spring.ai.mcp.client.connect;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+
+
 
 @SpringBootApplication
 public class Section9McpClientApplication {

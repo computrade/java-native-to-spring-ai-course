@@ -6,7 +6,7 @@ Welcome to the **Stock Market Model Context Protocol (MCP) Server**, built with 
 
 ## 🏗 Overview & Capabilities
 
-This server exposes real-time market metrics, context resources, and prompt templates to LLM Clients (such as Claude Desktop, Cursor, or custom Spring AI Clients) via the **Model Context Protocol (MCP)**.
+This server exposes real-time market metrics, context resources, and prompt to LLM Clients (such as Spring AI MCP Client ) via the **Model Context Protocol (MCP)**.
 
 ---
 
@@ -19,12 +19,10 @@ Dynamic functions executed on demand by the LLM:
 
 ### 2. 📑 Resources (`stock://...`)
 Exposed data streams and context files:
-* `stock://market-summary/{symbol}`: Returns dynamic text-based stock market metrics for a ticker.
 * `stock://docs/architecture.md`: *(This File)* Serves system architecture and capability documentation.
 
 ### 3. 💬 Prompts (`McpSchema.Prompt`)
 Pre-defined prompt templates to guide AI analysis:
-* `analyze-stock-portfolio`: Parametrized prompt template (`symbol`, `riskTolerance`).
 * `general-market-overview`: Zero-argument prompt template for high-level market evaluations.
 
 ---

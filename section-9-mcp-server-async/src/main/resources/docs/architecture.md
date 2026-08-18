@@ -6,7 +6,7 @@ Welcome to the **Stock Market Model Context Protocol (MCP) Server**, built with 
 
 ## 🏗 Overview & Capabilities
 
-This server exposes real-time market metrics, context resources, and prompt templates to LLM Clients (such as Claude Desktop, Cursor, or custom Spring AI Clients) via the **Model Context Protocol (MCP)**.
+This server exposes real-time market metrics, context resources, and prompt to LLM Clients (such as Spring AI MCP Client ) via the **Model Context Protocol (MCP)**.
 
 ---
 
@@ -16,6 +16,7 @@ This server exposes real-time market metrics, context resources, and prompt temp
 Dynamic functions executed on demand by the LLM:
 * `fetchStockPrice`: Fetches real-time stock quotes (current price, high, low, previous close).
 * `exportCompanyNews`: Retrieves latest news articles for a specific ticker over a 30-day window.
+* `getAnalystRecommendations`: Retrieves Wall Street analyst buy/hold/sell recommendation trends for a given stock symbol.
 
 ### 2. 📑 Resources (`stock://...`)
 Exposed data streams and context files:

@@ -2,6 +2,7 @@ package com.computrade.course.spring.ai.observability.config;
 
 
 import com.computrade.course.spring.ai.observability.service.StockMarketToolService;
+import io.micrometer.observation.ObservationRegistry;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
@@ -10,8 +11,10 @@ import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.pgvector.PgVectorStore;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.client.RestClient;
 
@@ -28,15 +31,6 @@ public class ObservabilityConfig {
         return builder
                 .defaultAdvisors(new SimpleLoggerAdvisor(),messageChatMemoryAdvisor)
                 .defaultTools(stockMarketToolService)
-                .build();
-    }
-
-    @Bean
-    public VectorStore pdfVectorStore(JdbcTemplate jdbcTemplate, EmbeddingModel embeddingModel) {
-        return PgVectorStore.builder(jdbcTemplate,embeddingModel)
-                .vectorTableName("pdf_vector_store")
-                .initializeSchema(true)
-                .maxDocumentBatchSize(100)
                 .build();
     }
 

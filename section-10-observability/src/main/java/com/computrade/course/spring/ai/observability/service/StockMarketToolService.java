@@ -30,8 +30,7 @@ public class StockMarketToolService  {
 
     @Tool(
             name = "exportCompanyNews",
-            description = "Downloads and exports the raw recent company news articles for a given symbol.",
-            returnDirect = true // Snaps the LLM loop and delivers the raw collection directly to the controller
+            description = "Downloads and exports the raw recent company news articles for a given symbol."
     )
     public List<CompanyNews> exportCompanyNews(
             @ToolParam(description = "The uppercase equity symbol e.g. 'TSLA', 'MSFT'") String symbol

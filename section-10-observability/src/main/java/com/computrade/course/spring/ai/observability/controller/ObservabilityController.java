@@ -1,7 +1,6 @@
 package com.computrade.course.spring.ai.observability.controller;
 
 import com.computrade.course.spring.ai.observability.service.ChatService;
-import com.computrade.course.spring.ai.observability.service.VectorDBRouterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 public class ObservabilityController {
 
     private final ChatService chatService;
-    private final VectorDBRouterService vectorDBRouterService;
-
 
     @GetMapping("/chat/{userId}")
     public ResponseEntity<String> chat(
@@ -27,9 +24,9 @@ public class ObservabilityController {
         return ResponseEntity.ok(chatResponse);
     }
 
-    @GetMapping("/chat-rag/{userId}/route/tables")
-    public ResponseEntity<String> vectorDBRouterByTablesService(@PathVariable String userId,  @RequestParam String prompt) {
-        String response = vectorDBRouterService.routeAndQueryByTable(userId, prompt);
+    @GetMapping("/chat/{userId}/vectorStore")
+    public ResponseEntity<String> queryVectorStore(@PathVariable String userId,  @RequestParam String prompt) {
+        String response = chatService.queryVectorStore(userId, prompt);
         return ResponseEntity.ok(response);
     }
 

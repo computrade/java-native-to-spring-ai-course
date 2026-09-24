@@ -5,6 +5,8 @@ import org.jspecify.annotations.Nullable;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.document.Document;
+import org.springframework.ai.embedding.EmbeddingModel;
+import org.springframework.ai.embedding.EmbeddingResponse;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +14,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -20,6 +23,8 @@ public class ChatService {
 
     private final ChatClient chatClient;
     private final VectorStore vectorStore;
+    private final EmbeddingModel embeddingModel;
+
 
     @Value("classpath:systemPromptForCourse.st")
     private Resource courseSystemPrompt;
@@ -62,6 +67,12 @@ public class ChatService {
                 .content();
 
         return response;
+    }
+
+
+    public Map<String, EmbeddingResponse> embed(String prompt) {
+        EmbeddingResponse embeddingResponse = embeddingModel.embedForResponse(List.of(prompt));
+        return Map.of("embedding", embeddingResponse);
     }
 
 }

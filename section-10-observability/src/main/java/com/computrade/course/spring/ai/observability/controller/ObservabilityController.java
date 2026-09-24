@@ -3,8 +3,11 @@ package com.computrade.course.spring.ai.observability.controller;
 import com.computrade.course.spring.ai.observability.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.embedding.EmbeddingResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -22,6 +25,12 @@ public class ObservabilityController {
         // Keep data for userId, so that the conversation is remembered for the same userId
         String chatResponse = chatService.chat(userId, prompt);
         return ResponseEntity.ok(chatResponse);
+    }
+
+    @GetMapping("/embedding")
+    public ResponseEntity<Map<String, EmbeddingResponse>> embed(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
+        Map<String,EmbeddingResponse> embeddingResponse = chatService.embed(message);
+        return ResponseEntity.ok(embeddingResponse);
     }
 
     @GetMapping("/chat/{userId}/vectorStore")

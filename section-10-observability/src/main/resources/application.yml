@@ -7,6 +7,15 @@ management:
     web:
       exposure:
         include: health,metrics #,prometheus
+  observations:
+    key-values:
+      application: "spring-ai-course"
+      environment: "dev"
+  endpoint:
+    health:
+      # Display full health check details (e.g., status, response time)
+      show-details: always
+
 
 app:
   finnhub:

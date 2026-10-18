@@ -59,4 +59,11 @@ public class GeminiChatStructuredOutputController {
         StoreCatalog storeCatalog = chatStructuredOutputService.getStoreCatalogWithCustomValidation(category);
         return ResponseEntity.ok(storeCatalog);
     }
+
+    @GetMapping("/store/catalog/validation/llm")
+    public ResponseEntity<StoreCatalog> getStoreCatalogWithLLMStructuredOutput(String category) {
+        StoreCatalog storeCatalog = chatStructuredOutputService.getStoreCatalogWithLLMStructuredOutput(category);
+        return ResponseEntity.ok(storeCatalog);
+    }
+
 }

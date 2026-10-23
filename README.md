@@ -214,4 +214,4 @@ cd section-10-observability
 docker compose up -d
 ```
 - **Prometheus UI**: `http://localhost:9090`
-- **Grafana Dashboards**: `http://localhost:3005` (Default login: `admin` / `admin`)
+- **Grafana Dashboards**: `http://localhost:3005`

@@ -94,10 +94,10 @@ Start the PostgreSQL instance equipped with the `pgvector` extension and pgAdmin
 docker compose up -d
 ```
 
-| Service | Host Port | Credentials / Details |
-| :--- | :--- | :--- |
-| **PostgreSQL (pgvector)** | `localhost:5432` | DB: `springai_db`, User: `demouser`, Password: `demopassword` |
-| **pgAdmin 4** | `localhost:5050` | Email: `admin@admin.com`, Password: `adminpassword` |
+| Service | Host Port | Credentials / Details    |
+| :--- | :--- |:-------------------------|
+| **PostgreSQL (pgvector)** | `localhost:5432` | DB: `springai_db` |
+| **pgAdmin 4** | `localhost:5050` | Email: `admin@admin.com` |
 
 ---
 
@@ -204,8 +204,8 @@ http://localhost:8080/swagger-ui/index.html
 ## Infrastructure & Services Overview
 
 ### Core Stack (Root `compose.yaml`)
-- **PostgreSQL Vector Store**: `localhost:5432` (`demouser` / `demopassword`)
-- **pgAdmin Management UI**: `http://localhost:5050` (`admin@admin.com` / `adminpassword`)
+- **PostgreSQL Vector Store**: `localhost:5432` 
+- **pgAdmin Management UI**: `http://localhost:5050` 
 
 ### Observability Stack (`section-10-observability/compose.yml`)
 To launch Prometheus and Grafana for Section 10:
